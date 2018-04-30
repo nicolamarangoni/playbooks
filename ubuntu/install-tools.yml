@@ -53,7 +53,7 @@
         path: /etc/postgresql/10/main/postgresql.conf
         section:
         option: listen_addresses
-        value: '*'
+        value: "'*'"
     - name: disable postgresql
       systemd:
         name: postgresql
