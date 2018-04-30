@@ -1,0 +1,6 @@
+- hosts: localhost
+  tasks:
+    - name: test ghetto-json
+      ghetto_json:
+        path= /playbooks/data/test.json
+        shape=triangular
