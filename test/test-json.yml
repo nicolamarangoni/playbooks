@@ -1,5 +1,9 @@
 - hosts: localhost
   tasks:
-    - ghetto_json:
-        path = /playbooks/data/test.json
-        shape = triangular
+    - name: test json module
+      json_module:
+        path: "data/test.json"
+        changes:
+          - type: "set"
+            path: "shape"
+            value: "triangular"
