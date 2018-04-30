@@ -48,6 +48,11 @@
           - derby-server
           - oracle-java8-installer
           - oracle-java8-set-default
+    - name: configure postgresql
+      ini_file:
+        path: /etc/postgresql/10/main/postgresql.conf
+        option: listen_addresses
+        value: '*'
     - name: disable postgresql
       systemd:
         name: postgresql
