@@ -1,0 +1,42 @@
+- hosts: '{{ host }}'
+  tasks:
+    - name: add mariadb key
+      apt_key:
+        keyserver: hkp://keyserver.ubuntu.com:80
+        id: '0xF1656F24C74CD1D8'
+    - name: add mariadb repository
+      apt_repository:
+        repo: deb [arch=amd64,i386] http://mirror.23media.de/mariadb/repo/10.3/ubuntu artful main
+    - name: install mariadb
+      apt:
+        update_cache: yes
+        name:
+          - mariadb-server
+    - name: set root password
+      mysql_user:
+        name: root
+        password: mariadb
+    - name: create ~/.my.cnf
+      copy:
+        dest: '~/.my.cnf'
+        content: |
+          [client]
+          user=root
+          password=mariadb
+        mode: 0600
+    - name: add remote root
+      mysql_user:
+        name: root
+        host: '%'
+        password: mariadb
+        priv: '*.*:ALL,GRANT'
+    - name: listen on all addresses
+      ini_file:
+        dest: /etc/mysql/my.cnf
+        section: mysqld
+        option: bind-address
+        value: '*'
+    - name: restart server
+      systemd:
+        name: mariadb
+        state: restarted

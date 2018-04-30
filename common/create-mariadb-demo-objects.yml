@@ -1,0 +1,13 @@
+- hosts: '{{ host }}'
+  tasks:
+    - name: add remote demo
+      mysql_db:
+        name: demo
+        collation: utf8mb4_general_ci
+        encoding: utf8mb4
+    - name: add remote demo
+      mysql_user:
+        name: demo
+        host: '%'
+        password: demo
+        priv: 'demo.*:ALL,GRANT'

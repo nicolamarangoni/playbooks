@@ -1,0 +1,37 @@
+- hosts: "{{ host | default('localhost') }}"
+  tasks:
+    - name: Create group sqlpad
+      group:
+        name: sqlpad
+    - name: Create user sqlpad
+      user:
+        name: sqlpad
+        comment: User for the SQLPad
+        group: sqlpad
+        groups: users
+    - name: Install SQLPad
+      npm:
+        name: sqlpad
+        global: yes
+    - name: Create repository
+      file:
+        name: /opt/sqlpad
+        owner: sqlpad
+        group: sqlpad
+        recurse: yes
+    - name: Create service
+      copy:
+        dest: /etc/systemd/system/sqlpad.service
+        content: |
+          [Unit]
+          Description=Service to run SQLPad Daemon
+          Documentation=
+          [Service]
+          User=sqlpad
+          Group=sqlpad
+          Type=forking
+          WorkingDirectory=/opt/sqlpad
+          ExecStart=/usr/local/bin/sqlpad --port 3000 --dir /opt/sqlpad/db
+          [Install]
+          WantedBy=multi-user.target
+        mode: 0644

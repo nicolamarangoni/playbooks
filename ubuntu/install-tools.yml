@@ -1,0 +1,80 @@
+- hosts: '{{ host }}'
+  tasks:
+    - name: add odk repository
+      apt_repository:
+        repo: ppa:opendk/databases
+    - name: add odk repository
+      apt_repository:
+        repo: ppa:webupd8team/java
+    - name:
+      debconf:
+        name: 'oracle-java8-installer'
+        question: 'shared/accepted-oracle-license-v1-1'
+        value: 'true'
+        vtype: 'select'
+    - name: install common tools
+      apt:
+        update_cache: yes
+        name:
+          - software-properties-common
+          - python-mysqldb
+          - postgresql
+          - apache2
+          - libapache2-mod-php
+          - php
+          - php-xml
+          - npm
+          - nodejs
+          - mongodb
+          - git
+          - imagemagick
+          - firebird-dev
+          - firebird-server
+          - firebird3.0-doc
+          - firebird3.0-examples
+          - default-jdk
+          - scala
+          - tomcat8
+          - tomcat8-admin
+          - maven
+          - gradle
+          - libh2-java
+          - libhsqldb-java
+          - libderby-java
+          - libmysql-java
+          - libpg-java
+          - hsqldb-server
+          - h2-server
+          - derby-server
+          - oracle-java8-installer
+          - oracle-java8-set-default
+    - name: disable postgresql
+      systemd:
+        name: postgresql
+        state: stopped
+        enabled: no
+    - name: disable firebird3.0
+      systemd:
+        name: firebird3.0
+        state: stopped
+        enabled: no
+    - name: disable tomcat8
+      systemd:
+        name: tomcat8
+        state: stopped
+        enabled: no
+    - name: disable derby
+      systemd:
+        name: derby
+        state: stopped
+        enabled: no
+    - name: disable h2database
+      systemd:
+        name: h2database
+        state: stopped
+        enabled: no
+    - name: disable hsqldb
+      systemd:
+        name: hsqldb
+        state: stopped
+        enabled: no

@@ -1,0 +1,71 @@
+- hosts: "{{ host | default('localhost') }}"
+  tasks:
+    - name: Create group zeppelin
+      group:
+        name: zeppelin
+    - name: Create user zeppelin
+      user:
+        name: zeppelin
+        comment: User for the Zeppelin Notebook
+        group: zeppelin
+        groups: users
+    - name: Download Zeppelin tar
+      get_url:
+        url: http://mirror.23media.de/apache/zeppelin/zeppelin-{{ version }}/zeppelin-{{ version }}-bin-all.tgz
+        dest: /opt
+    - name: Decompress archive
+      unarchive:
+        src: /opt/zeppelin-{{ version }}-bin-all.tgz
+        dest: /opt
+    - name: Remove backup folder
+      file:
+        path: /opt/zeppelin-backup
+        state: absent
+    - name: Backup conf folder
+      copy:
+        src: /opt/zeppelin/conf
+        dest: /opt/zeppelin-backup/conf
+      ignore_errors: yes
+    - name: Backup notebook folder
+      copy:
+        src: /opt/zeppelin/notebook
+        dest: /opt/zeppelin-backup/notebook
+      ignore_errors: yes
+    - name: Remove current folder
+      file:
+        path: /opt/zeppelin
+        state: absent
+    - name: Rename folder
+      command: mv /opt/zeppelin-{{ version }}-bin-all /opt/zeppelin
+    - name: Change ownership
+      file:
+        path: /opt/zeppelin
+        owner: zeppelin
+        group: zeppelin
+        recurse: yes
+    - name: Remove archive
+      file:
+        path: /opt/zeppelin-{{ version }}-bin-all.tgz
+        state: absent
+    - name: Create service
+      copy:
+        dest: /etc/systemd/system/zeppelin.service
+        content: |
+          [Unit]
+          Description=Service to run Zeppelin Daemon
+          Documentation=
+          [Service]
+          User=zeppelin
+          Group=zeppelin
+          Type=forking
+          WorkingDirectory=/opt/zeppelin
+          ExecStart=/opt/zeppelin/bin/zeppelin-daemon.sh start
+          ExecStop=/opt/zeppelin/bin/zeppelin-daemon.sh stop
+          [Install]
+          WantedBy=multi-user.target
+        mode: 0644
+    - name: Start Service
+      systemd:
+        daemon_reload: yes
+        name: zeppelin
+        state: started
