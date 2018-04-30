@@ -2,7 +2,7 @@
   tasks:
     - name: test json module
       json_module:
-        path: "data/test.json"
+        path: "~/playbooks/data/test.json"
         changes:
           - type: "set"
             path: "shape"
