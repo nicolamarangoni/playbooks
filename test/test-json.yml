@@ -7,3 +7,6 @@
           - type: "set"
             path: "shape"
             value: "triangular"
+          - type: "set"
+            path: "price"
+            value: 100
