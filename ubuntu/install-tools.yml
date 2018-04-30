@@ -17,6 +17,7 @@
         update_cache: yes
         name:
           - software-properties-common
+          - aptitude
           - python-mysqldb
           - postgresql
           - apache2
