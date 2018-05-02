@@ -3,9 +3,13 @@
     - name: Get hostname
       shell: hostname
       register: var_hostname
+    - name: debug var_hostname
+      debug: msg="var_hostname {{ var_hostname }}"
     - name: Get IP
       shell: hostname -I
       register: var_ip
+    - name: debug var_ip
+      debug: msg="var_ip {{ var_ip }}"
     - name: Set galera binlog_format
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
