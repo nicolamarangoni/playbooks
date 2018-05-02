@@ -15,6 +15,11 @@
     command: galera_new_cluster
 - hosts: '{{ host_other }}'
   tasks:
+  - name: stop firewall
+    systemd:
+      name: firewalld
+      enabled: no
+      state: stopped
   - name: Start first node
     systemd:
       name: mariadb
