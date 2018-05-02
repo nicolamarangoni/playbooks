@@ -28,6 +28,11 @@
       systemd:
         name: mariadb
         state: restarted
+    - name: stop firewall
+      systemd:
+        name: firewalld
+        enabled: no
+        state: stopped
     - name: add demo database
       mysql_db:
         name: demo
