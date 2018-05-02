@@ -5,9 +5,9 @@
   tasks:
     - name: Configure node
       copy:
-        dest: ~/galera.cnf
+        dest: /etc/my.cnf.d/server.cnf
         content: |
-          [mysqld]
+          [galera]
           binlog_format=ROW
           default-storage-engine=innodb
           innodb_autoinc_lock_mode=2
