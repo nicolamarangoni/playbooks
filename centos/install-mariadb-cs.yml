@@ -32,7 +32,7 @@
       copy:
         dest: ~/mariadb-columnstore-install.sh
         content: |
-          yum -y install mariadb-columnstore-*.rpm
+          yum -y install ~/mariadb-columnstore-*.rpm
     - name: Install all packages
       command: sh ~/mariadb-columnstore-install.sh
     - name: Remove archive
