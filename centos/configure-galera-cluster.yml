@@ -4,12 +4,12 @@
       shell: hostname
       register: var_hostname
     - name: debug var_hostname
-      debug: msg="var_hostname {{ var_hostname }}"
+      debug: msg="var_hostname {{ var_hostname.stdout_lines }}"
     - name: Get IP
       shell: hostname -I
       register: var_ip
     - name: debug var_ip
-      debug: msg="var_ip {{ var_ip }}"
+      debug: msg="var_ip {{ var_ip.stdout_lines }}"
     - name: Set galera binlog_format
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
@@ -69,13 +69,13 @@
         dest: /etc/my.cnf.d/server.cnf
         section: galera
         option: wsrep_node_address
-        value: "{{ var_ip.split(' ')[0] }}"
+        value: "{{ var_ip.stdout_lines.split(' ')[0] }}"
     - name: Set galera wsrep_node_name
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
         section: galera
         option: wsrep_node_name
-        value: "{{ var_hostname }}"
+        value: "{{ var_hostname.stdout_lines }}"
     - name: Disable mariadb service
       systemd:
         name: mariadb
