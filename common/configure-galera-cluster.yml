@@ -2,7 +2,7 @@
   tasks:
     - name: Configure node
       copy:
-        dest: /etc/mysql/conf.d/galera.cnf
+        dest: ~/galera.cnf
         content: |
           [mysqld]
           binlog_format=ROW
