@@ -7,11 +7,5 @@
       state: stopped
 - hosts: '{{ host_first }}'
   tasks:
-  - name: Set galera default-storage-engine
-    ini_file:
-      dest: /var/lib/mysql/grastate.dat
-      section: ''
-      option: safe_to_bootstrap
-      value: 1
   - name: Stop first node
     command: stopped
