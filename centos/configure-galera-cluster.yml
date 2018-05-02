@@ -1,10 +1,10 @@
 - hosts: '{{ host }}'
   tasks:
     - name: Get hostname
-      command: hostname
+      shell: hostname
       register: var_hostname
     - name: Get IP
-      command: hostname -I
+      shell: hostname -I
       register: var_ip
     - name: Set galera binlog_format
       ini_file:
