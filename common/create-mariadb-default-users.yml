@@ -18,16 +18,6 @@
         host: '%'
         password: '{{ password }}'
         priv: '*.*:ALL,GRANT'
-    - name: listen on all addresses
-      ini_file:
-        dest: /etc/mysql/my.cnf
-        section: mysqld
-        option: bind-address
-        value: '*'
-    - name: restart server
-      systemd:
-        name: mariadb
-        state: restarted
     - name: stop firewall
       systemd:
         name: firewalld
@@ -49,3 +39,7 @@
         name: ''
         host_all: yes
         state: absent
+    - name: restart server
+      systemd:
+        name: mariadb
+        state: restarted

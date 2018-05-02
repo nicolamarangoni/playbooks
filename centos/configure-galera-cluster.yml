@@ -3,27 +3,69 @@
     var_hostname: "{{ lookup('pipe', 'hostname') }}"
     var_ip: "{{ lookup('pipe', 'hostname -I') }}"
   tasks:
-    - name: Configure node
-      copy:
+    - name: Set galera binlog_format
+      ini_file:
         dest: /etc/my.cnf.d/server.cnf
-        content: |
-          [galera]
-          binlog_format=ROW
-          default-storage-engine=innodb
-          innodb_autoinc_lock_mode=2
-          bind-address=0.0.0.0
-
-          # Galera Provider Configuration
-          wsrep_on=ON
-          wsrep_provider=/usr/lib/galera/libgalera_smm.so
-
-          # Galera Cluster Configuration
-          wsrep_cluster_name="galera_cluster"
-          wsrep_cluster_address="gcomm://192.168.56.100,192.168.56.101,192.168.56.102"
-
-          # Galera Synchronization Configuration
-          wsrep_sst_method=rsync
-
-          # Galera Node Configuration
-          wsrep_node_address={{ var_ip.split(' ')[0] }}
-          wsrep_node_name={{ var_hostname }}
+        section: galera
+        option: binlog_format
+        value: ROW
+    - name: Set galera default-storage-engine
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: galera
+        option: default-storage-engine
+        value: innodb
+    - name: Set galera innodb_autoinc_lock_mode
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: galera
+        option: innodb_autoinc_lock_mode
+        value: 2
+    - name: Set galera bind-address
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: galera
+        option: bind-address
+        value: 0.0.0.0
+    - name: Set galera wsrep_on
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: galera
+        option: wsrep_on
+        value: ON
+    - name: Set galera wsrep_provider
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: galera
+        option: wsrep_provider
+        value: /usr/lib64/galera/libgalera_smm.so
+    - name: Set galera wsrep_cluster_name
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: galera
+        option: wsrep_cluster_name
+        value: "galera_cluster"
+    - name: Set galera wsrep_cluster_address
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: galera
+        option: wsrep_cluster_address
+        value: "gcomm://192.168.56.100,192.168.56.101,192.168.56.102"
+    - name: Set galera wsrep_sst_method
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: galera
+        option: wsrep_sst_method
+        value: rsync
+    - name: Set galera wsrep_node_address
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: galera
+        option: wsrep_node_address
+        value: {{ var_ip.split(' ')[0] }}
+    - name: Set galera wsrep_node_name
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: galera
+        option: wsrep_node_name
+        value: {{ var_hostname }}
