@@ -13,3 +13,9 @@
         name: firewalld
         enabled: no
         state: stopped
+    - name: Disable SELinux
+      ini_file:
+        dest: /etc/selinux/config
+        section: ''
+        option: SELINUX
+        value: disabled

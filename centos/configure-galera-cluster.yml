@@ -1,8 +1,11 @@
 - hosts: '{{ host }}'
-  vars:
-    var_hostname: "{{ lookup('pipe', 'hostname') }}"
-    var_ip: "{{ lookup('pipe', 'hostname -I') }}"
   tasks:
+    - name: Get hostname
+      command: hostname
+      register: var_hostname
+    - name: Get IP
+      command: hostname -I
+      register: var_ip
     - name: Set galera binlog_format
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
