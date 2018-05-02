@@ -4,4 +4,4 @@
       yum:
         update_only: yes
         state: latest
-        name: *
+        name: '*'
