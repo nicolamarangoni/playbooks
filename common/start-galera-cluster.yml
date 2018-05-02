@@ -15,7 +15,7 @@
       dest: /var/lib/mysql/grastate.dat
       section: ''
       option: safe_to_bootstrap
-      value: 1
+      value: '1'
   - name: Start first node
     command: galera_new_cluster
 - hosts: '{{ host_other }}'
