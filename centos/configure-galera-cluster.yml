@@ -69,3 +69,8 @@
         section: galera
         option: wsrep_node_name
         value: "{{ var_hostname }}"
+    - name: Disable mariadb service
+      systemd:
+        name: mariadb
+        enabled: no
+        state: stopped

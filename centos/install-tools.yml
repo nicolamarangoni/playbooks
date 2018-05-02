@@ -8,3 +8,8 @@
           - wget
           - epel-release
           - MySQL-python
+    - name: stop firewall
+      systemd:
+        name: firewalld
+        enabled: no
+        state: stopped

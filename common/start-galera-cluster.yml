@@ -5,6 +5,11 @@
       name: firewalld
       enabled: no
       state: stopped
+  - name: Disable mariadb service
+    systemd:
+      name: mariadb
+      enabled: no
+      state: stopped
   - name: Set safe_to_bootstrap to 1 (in case of startup error)
     ini_file:
       dest: /var/lib/mysql/grastate.dat
@@ -15,13 +20,18 @@
     command: galera_new_cluster
 - hosts: '{{ host_other }}'
   tasks:
-  - name: stop firewall
+  - name: Stop firewall
     systemd:
       name: firewalld
+      enabled: no
+      state: stopped
+  - name: Disable mariadb service
+    systemd:
+      name: mariadb
       enabled: no
       state: stopped
   - name: Start first node
     systemd:
       name: mariadb
       daemon_reload: yes
-      state: restarted
+      state: started
