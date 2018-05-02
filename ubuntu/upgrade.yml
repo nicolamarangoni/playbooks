@@ -3,5 +3,6 @@
     - name: upgrade system
       apt:
         update_cache: yes
+        state: latest
         upgrade: yes
         autoremove: yes

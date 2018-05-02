@@ -1,0 +1,7 @@
+- hosts: '{{ host }}'
+  tasks:
+    - name: install common tools
+      yum:
+        state: latest
+        name:
+          - java

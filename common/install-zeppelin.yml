@@ -68,4 +68,5 @@
       systemd:
         daemon_reload: yes
         name: zeppelin
+        enabled: yes
         state: started

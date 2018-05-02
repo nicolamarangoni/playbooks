@@ -15,6 +15,7 @@
     - name: install common tools
       apt:
         update_cache: yes
+        state: latest
         name:
           - software-properties-common
           - aptitude
