@@ -38,3 +38,8 @@
       name: mariadb
       daemon_reload: yes
       state: restarted
+  - name: stop firewall
+    systemd:
+      name: firewalld
+      enabled: no
+      state: stopped

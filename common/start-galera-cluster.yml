@@ -1,5 +1,10 @@
 - hosts: '{{ host_first }}'
   tasks:
+  - name: stop firewall
+    systemd:
+      name: firewalld
+      enabled: no
+      state: stopped
   - name: Set safe_to_bootstrap to 1 (in case of startup error)
     ini_file:
       dest: /var/lib/mysql/grastate.dat
