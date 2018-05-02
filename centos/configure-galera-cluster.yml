@@ -44,7 +44,7 @@
         dest: /etc/my.cnf.d/server.cnf
         section: galera
         option: wsrep_cluster_name
-        value: "galera_cluster"
+        value: "{{ cluster_name }}"
     - name: Set galera wsrep_cluster_address
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
