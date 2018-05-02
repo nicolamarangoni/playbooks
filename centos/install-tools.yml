@@ -5,3 +5,5 @@
         state: latest
         name:
           - java
+          - epel-release
+          

@@ -1,6 +1,6 @@
 - hosts: '{{ host }}'
   tasks:
-  - name: create ~/.my.cnf
+  - name: create MariaDB.repo
     copy:
       dest: '/etc/yum.repos.d/MariaDB.repo'
       content: |
@@ -12,3 +12,7 @@
         gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
         gpgcheck=1
       mode: 0644
+  - name: install MariaDB
+    yum:
+      state: latest
+      name: MariaDB*
