@@ -16,6 +16,7 @@
           - rsync
           - snappy
           - net-tools
+          - MySQL-python
           - perl
           - perl-DBI
           - perl-DBD-MySQL

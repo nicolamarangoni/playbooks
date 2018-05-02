@@ -5,3 +5,6 @@
         state: latest
         name:
           - java
+          - wget
+          - epel-release
+          - MySQL-python
