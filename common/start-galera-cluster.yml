@@ -11,11 +11,7 @@
       enabled: no
       state: stopped
   - name: Set safe_to_bootstrap to 1 (in case of startup error)
-    ini_file:
-      dest: /var/lib/mysql/grastate.dat
-      section: ''
-      option: safe_to_bootstrap
-      value: '1'
+    command: sed -i "s/safe_to_bootstrap: 0/safe_to_bootstrap: 1/g" /var/lib/mysql/grastate.dat
   - name: Start first node
     command: galera_new_cluster
 - hosts: '{{ host_other }}'
