@@ -3,7 +3,7 @@
     - name: set root password
       mysql_user:
         name: root
-        password: {{ password }}
+        password: '{{ password }}'
     - name: create ~/.my.cnf
       copy:
         dest: '~/.my.cnf'
