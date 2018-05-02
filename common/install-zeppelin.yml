@@ -47,6 +47,12 @@
       file:
         path: /opt/zeppelin-{{ version }}-bin-all.tgz
         state: absent
+    - name: Download MariaDB jdbc driver
+      get_url:
+        url: https://downloads.mariadb.com/Connectors/java/connector-java-2.2.3/mariadb-java-client-2.2.3.jar
+        dest: /opt/zeppelin/interpreter/jdbc
+        owner: zeppelin
+        group: zeppelin
     - name: Create service
       copy:
         dest: /etc/systemd/system/zeppelin.service
