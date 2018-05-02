@@ -11,7 +11,7 @@
           [client]
           user=root
           password={{ password }}
-        mode: 0600
+        mode: '0600'
     - name: add remote root
       mysql_user:
         name: root
@@ -39,7 +39,3 @@
         name: ''
         host_all: yes
         state: absent
-    - name: restart server
-      systemd:
-        name: mariadb
-        state: restarted
