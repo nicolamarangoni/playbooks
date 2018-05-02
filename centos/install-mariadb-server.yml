@@ -15,4 +15,21 @@
   - name: install MariaDB
     yum:
       state: latest
-      name: MariaDB*
+      name:
+        - epel-release
+        - MySQL-python
+        - MariaDB-aws-key-management
+        - MariaDB-backup
+        - MariaDB-cassandra-engine
+        - MariaDB-client
+        - MariaDB-common
+        - MariaDB-compat
+        - MariaDB-connect-engine
+        - MariaDB-devel
+        - MariaDB-gssapi-server
+        - MariaDB-oqgraph-engine
+        - MariaDB-rocksdb-engine
+        - MariaDB-server
+        - MariaDB-shared
+        - MariaDB-test
+        - MariaDB-tokudb-engine

@@ -5,5 +5,3 @@
         state: latest
         name:
           - java
-          - epel-release
-          - MySQL-python
