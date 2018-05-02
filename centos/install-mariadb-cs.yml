@@ -29,8 +29,7 @@
         src: ~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
         dest: '~'
     - name: Install all ColumnStore packages
-      yum:
-        command: yum install ~/mariadb-columnstore-*.rpm
+      command: yum install ~/mariadb-columnstore-*.rpm
     - name: Remove archive
       file:
         path: ~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
