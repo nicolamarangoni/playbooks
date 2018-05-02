@@ -50,7 +50,7 @@
         dest: /etc/my.cnf.d/server.cnf
         section: galera
         option: wsrep_cluster_address
-        value: "gcomm://192.168.56.100,192.168.56.101,192.168.56.102"
+        value: "gcomm://{{ cluster_address }}"
     - name: Set galera wsrep_sst_method
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
