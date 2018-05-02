@@ -29,19 +29,17 @@
         src: ~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
         dest: '~'
     - name: Install all ColumnStore packages
-      yum:
-        state: latest
-        name:
-          - ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-common.rpm
-          - ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-shared.rpm
-          - ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-client.rpm
-          - ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-server.rpm
-          - ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-libs.rpm
-          - ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-platform.rpm
-          - ~/mariadb-columnstore-{{ version }}-x86_64-centos7-gssapi-server.rpm
-          - ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-rocksdb-engine.rpm
-          - ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-storage-engine.rpm
-          - ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-tokudb-engine.rpm
+      command:
+        - yum -y install ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-common.rpm
+        - yum -y install ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-shared.rpm
+        - yum -y install ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-client.rpm
+        - yum -y install ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-server.rpm
+        - yum -y install ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-libs.rpm
+        - yum -y install ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-platform.rpm
+        - yum -y install ~/mariadb-columnstore-{{ version }}-x86_64-centos7-gssapi-server.rpm
+        - yum -y install ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-rocksdb-engine.rpm
+        - yum -y install ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-storage-engine.rpm
+        - yum -y install ~/mariadb-columnstore-{{ version }}-1-x86_64-centos7-tokudb-engine.rpm
     - name: Remove archive
       file:
         path: ~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz

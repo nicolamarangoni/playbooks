@@ -1,4 +1,7 @@
 - hosts: '{{ hosts }}'
+  vars:
+    var_hostname: "{{ lookup('pipe', 'hostname') }}"
+    var_ip: "{{ lookup('pipe', 'hostname -I') }}"
   tasks:
     - name: Configure node
       copy:
@@ -22,5 +25,5 @@
           wsrep_sst_method=rsync
 
           # Galera Node Configuration
-          wsrep_node_address="$(hostname -I | awk '{ print $0}')"
-          wsrep_node_name="$(hostname)"
+          wsrep_node_address={{ var_ip.split(' ')[0] }}
+          wsrep_node_name={{ var_hostname }}
