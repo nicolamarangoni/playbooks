@@ -28,16 +28,9 @@
       unarchive:
         src: ~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
         dest: '~'
-    - name: Finding RPM files
-      find:
-        paths: '~'
-        patterns: "mariadb-columnstore-*.rpm"
-      register: rpm_result
     - name: Install all ColumnStore packages
       yum:
-        name: "{{ item.path }}"
-        state: latest
-      with_items: "{{ rpm_result.files }}"
+        command: yum install ~/mariadb-columnstore-*.rpm
     - name: Remove archive
       file:
         path: ~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
