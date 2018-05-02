@@ -2,6 +2,6 @@
   tasks:
     - name: upgrade
       yum:
-        update_only: yes
+        update_cache: yes
         state: latest
         name: '*'
