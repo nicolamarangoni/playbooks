@@ -1,4 +1,4 @@
-- hosts: '{{ hosts }}'
+- hosts: '{{ host }}'
   vars:
     var_hostname: "{{ lookup('pipe', 'hostname') }}"
     var_ip: "{{ lookup('pipe', 'hostname -I') }}"
@@ -62,10 +62,10 @@
         dest: /etc/my.cnf.d/server.cnf
         section: galera
         option: wsrep_node_address
-        value: {{ var_ip.split(' ')[0] }}
+        value: "{{ var_ip.split(' ')[0] }}"
     - name: Set galera wsrep_node_name
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
         section: galera
         option: wsrep_node_name
-        value: {{ var_hostname }}
+        value: "{{ var_hostname }}"
