@@ -6,4 +6,4 @@
         name:
           - java
           - epel-release
-          
+          - MySQL-python
