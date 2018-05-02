@@ -1,6 +1,6 @@
 - hosts: '{{ host }}'
   tasks:
-    - name: install dependencies
+    - name: Install dependencies
       yum:
         state: latest
         name:
@@ -29,7 +29,7 @@
         src: ~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
         dest: '~'
     - name: Install all ColumnStore packages
-      command: yum install ~/mariadb-columnstore-*.rpm
+      command: yum -y install ~/mariadb-columnstore-*.rpm
     - name: Remove archive
       file:
         path: ~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz

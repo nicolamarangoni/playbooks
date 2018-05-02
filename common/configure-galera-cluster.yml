@@ -22,5 +22,5 @@
           wsrep_sst_method=rsync
 
           # Galera Node Configuration
-          wsrep_node_address="192.168.56.100"
-          wsrep_node_name="mariadb00"
+          wsrep_node_address="$(hostname -I | awk '{ print $0}')"
+          wsrep_node_name="$(hostname)"
