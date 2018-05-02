@@ -23,7 +23,11 @@
       get_url:
         url: https://downloads.mariadb.com/ColumnStore/{{ version }}/centos/x86_64/7/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
         dest: '~'
-    - name: Extract foo.tgz into /var/lib/foo
+    - name: Extract archive
       unarchive:
         src: ~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
         dest: '~'
+    - name: Install all ColumnStore packages
+      yum:
+        state: latest
+        name: mariadb-columnstore-*.rpm
