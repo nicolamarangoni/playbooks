@@ -1,4 +1,4 @@
-- hosts: '{{ host_first }}'
+- hosts: '{{ host_boot }}'
   tasks:
   - name: stop firewall
     systemd:
@@ -14,7 +14,7 @@
     command: "sed -i 's/safe_to_bootstrap: 0/safe_to_bootstrap: 1/g' /var/lib/mysql/grastate.dat"
   - name: Start first node
     command: galera_new_cluster
-- hosts: '{{ host_other }}'
+- hosts: '{{ host_join }}'
   tasks:
   - name: Stop firewall
     systemd:
