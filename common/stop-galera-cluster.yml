@@ -1,13 +1,13 @@
-- hosts: '{{ host_boot }}'
+- hosts: '{{ host_join }}'
   tasks:
-  - name: Stop other nodes
+  - name: Stop join nodes
     systemd:
       name: mariadb
       daemon_reload: yes
       state: stopped
-- hosts: '{{ host_join }}'
+- hosts: '{{ host_boot }}'
   tasks:
-  - name: Stop first node
+  - name: Stop boot node
     systemd:
       name: mariadb
       daemon_reload: yes
