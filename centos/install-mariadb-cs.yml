@@ -39,5 +39,3 @@
       file:
         path: ~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
         state: absent
-    - name: setup command aliases
-      command: "/usr/local/mariadb/columnstore/bin/columnstoreAlias"
