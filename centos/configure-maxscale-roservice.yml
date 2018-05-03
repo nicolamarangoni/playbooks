@@ -1,0 +1,32 @@
+- hosts: '{{ host }}'
+  tasks:
+    - name: Set service type
+      ini_file:
+        dest: /usr/share/maxscale/maxscale.cnf
+        section: {{service}}
+        option: type
+        value: service
+    - name: Set router
+      ini_file:
+        dest: /usr/share/maxscale/maxscale.cnf
+        section: {{service}}
+        option: router
+        value: readconnroute
+    - name: Set maxscale user
+        ini_file:
+        dest: /usr/share/maxscale/maxscale.cnf
+        section: {{service}}
+        option: user
+        value: maxscale
+    - name: Set maxscale password
+        ini_file:
+        dest: /usr/share/maxscale/maxscale.cnf
+        section: {{service}}
+        option: passwd
+        value: {{password}}
+    - name: Set rw servers
+        ini_file:
+        dest: /usr/share/maxscale/maxscale.cnf
+        section: {{service}}
+        option: servers
+        value: {{servers}}

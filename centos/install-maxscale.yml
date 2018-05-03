@@ -1,0 +1,15 @@
+- hosts: '{{ host }}'
+  tasks:
+    - name: stop firewall
+      systemd:
+        name: firewalld
+        enabled: no
+        state: stopped
+    - name: Download ColumnStore tar
+      get_url:
+        url: https://downloads.mariadb.com/MaxScale/{{ version }}/rhel/7/x86_64/maxscale-{{ version }}-1.rhel.7.x86_64.rpm
+        dest: '~'
+    - name: Install MaxScale
+      yum:
+        state: latest
+        name: maxscale-{{ version }}-1.rhel.7.x86_64.rpm
