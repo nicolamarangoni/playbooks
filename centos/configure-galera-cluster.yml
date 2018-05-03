@@ -39,7 +39,7 @@
         dest: /etc/my.cnf.d/server.cnf
         section: galera
         option: wsrep_on
-        value: ON
+        value: 'ON'
     - name: Set galera wsrep_provider
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
