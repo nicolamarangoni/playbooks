@@ -6,10 +6,10 @@
         section: mariadb
         option: server_id
         value: "{{ server_id }}"
-    - name: assign server id
+    - name: set read-only
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
-        section: ''
+        section:
         option: read-only
         value: '1'
     - name: restart server
