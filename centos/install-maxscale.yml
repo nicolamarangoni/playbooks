@@ -5,7 +5,7 @@
         name: firewalld
         enabled: no
         state: stopped
-    - name: Download ColumnStore tar
+    - name: Download MaxScale tar
       get_url:
         url: https://downloads.mariadb.com/MaxScale/{{ version }}/rhel/7/x86_64/maxscale-{{ version }}-1.rhel.7.x86_64.rpm
         dest: '~'
