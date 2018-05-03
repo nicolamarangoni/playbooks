@@ -5,7 +5,7 @@
         dest: /etc/my.cnf.d/server.cnf
         section: mariadb
         option: log-bin
-        value: master01
+        value: {{ binlog_name }}
     - name: assign server id
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
