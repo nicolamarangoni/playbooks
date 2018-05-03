@@ -1,0 +1,22 @@
+- hosts: '{{ host }}'
+  tasks:
+    - name: Install dependencies
+      yum:
+        state: latest
+        name:
+          - epel-release
+          - wget
+          - boost
+          - expect
+          - openssl
+          - zlib
+          - file
+          - sudo
+          - libaio
+          - rsync
+          - snappy
+          - net-tools
+          - MySQL-python
+          - perl
+          - perl-DBI
+          - perl-DBD-MySQL
