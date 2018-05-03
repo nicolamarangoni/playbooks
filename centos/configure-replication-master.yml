@@ -18,7 +18,3 @@
         section: mariadb
         option: log-basename
         value: "{{ basename }}"
-    - name: restart server
-      systemd:
-        name: mysql
-        state: restarted

@@ -27,7 +27,7 @@
         dest: /etc/my.cnf.d/server.cnf
         section: galera
         option: innodb_autoinc_lock_mode
-        value: 2
+        value: '2'
     - name: Set galera bind-address
       ini_file:
         dest: /etc/my.cnf.d/server.cnf

@@ -36,7 +36,3 @@
         section: galera
         option: log_slave_updates
         value: '1'
-    - name: restart server
-      systemd:
-        name: mysql
-        state: restarted
