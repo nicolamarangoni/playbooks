@@ -1,0 +1,12 @@
+- hosts: '{{ host }}'
+  tasks:
+    - name: assign server id
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: mariadb
+        option: server_id
+        value: {{ server_id }}
+    - name: restart server
+      systemd:
+        name: mysql
+        state: restarted

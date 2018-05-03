@@ -1,0 +1,56 @@
+- hosts: '{{ host }}'
+  tasks:
+    - name: Set service type
+      ini_file:
+        dest: /usr/share/maxscale/maxscale.cnf
+        section: {{service-name}}
+        option: type
+        value: service
+    - name: Set router
+      ini_file:
+        dest: /usr/share/maxscale/maxscale.cnf
+        section: {{service-name}}
+        option: router
+        value: {{router}}
+    - name: Set maxscale user
+        ini_file:
+        dest: /usr/share/maxscale/maxscale.cnf
+        section: {{service-name}}
+        option: user
+        value: maxscale
+    - name: Set maxscale password
+        ini_file:
+        dest: /usr/share/maxscale/maxscale.cnf
+        section: {{service-name}}
+        option: passwd
+        value: {{password}}
+    - name: Set rw servers
+        ini_file:
+        dest: /usr/share/maxscale/maxscale.cnf
+        section: {{service-name}}
+        option: servers
+        value: {{servers}}
+    - name: Set listener
+        ini_file:
+        dest: /usr/share/maxscale/maxscale.cnf
+        section: {{listener-name}}
+        option: type
+        value: listener
+    - name: Set protocol
+        ini_file:
+        dest: /usr/share/maxscale/maxscale.cnf
+        section: {{listener-name}}
+        option: protocol
+        value: MariaDBClient
+    - name: Assign service to listener
+        ini_file:
+        dest: /usr/share/maxscale/maxscale.cnf
+        section: {{listener-name}}
+        option: service
+        value: {{service-name}}
+    - name: Set port
+        ini_file:
+        dest: /usr/share/maxscale/maxscale.cnf
+        section: {{listener-name}}
+        option: port
+        value: {{port}}

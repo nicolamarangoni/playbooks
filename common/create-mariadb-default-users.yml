@@ -39,3 +39,9 @@
         name: ''
         host_all: yes
         state: absent
+    - name: add replication user
+      mysql_user:
+        name: replication
+        host: '%'
+        password: '{{ password }}'
+        priv: '*.*:REPLICATION SLAVE'
