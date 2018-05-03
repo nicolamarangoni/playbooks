@@ -5,6 +5,7 @@
         dest: /etc/my.cnf.d/server.cnf
         section: mariadb
         option: log-bin
+        value: ''
     - name: assign server id
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
