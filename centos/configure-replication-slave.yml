@@ -1,16 +1,40 @@
 - hosts: '{{ host }}'
   tasks:
+    - name: activate binlog
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: mariadb
+        option: log-bin
+        value: "{{ binlog_name }}"
     - name: assign server id
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
         section: mariadb
         option: server_id
         value: "{{ server_id }}"
+    - name: assign basename
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: mariadb
+        option: log-basename
+        value: "{{ basename }}"
     - name: set read-only
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
         section: mariadb
         option: read-only
+        value: '1'
+    - name: Set gtid_mode
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: galera
+        option: gtid_mode
+        value: ON
+    - name: Set log_slave_updates
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: galera
+        option: log_slave_updates
         value: '1'
     - name: restart server
       systemd:

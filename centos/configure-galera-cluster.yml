@@ -76,6 +76,18 @@
         section: galera
         option: wsrep_node_name
         value: "{{ var_hostname.stdout }}"
+    - name: Set gtid_mode
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: galera
+        option: gtid_mode
+        value: ON
+    - name: Set log_slave_updates
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: galera
+        option: log_slave_updates
+        value: '1'
     - name: Disable mariadb service
       systemd:
         name: mariadb
