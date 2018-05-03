@@ -76,12 +76,12 @@
         section: galera
         option: wsrep_node_name
         value: "{{ var_hostname.stdout }}"
-    - name: Set gtid_mode
+    - name: Set gtid_domain_id
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
         section: galera
-        option: gtid_mode
-        value: ON
+        option: gtid_domain_id
+        value: "{{ domain_id }}"
     - name: Set log_slave_updates
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
