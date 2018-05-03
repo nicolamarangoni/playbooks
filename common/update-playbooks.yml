@@ -1,0 +1,8 @@
+- hosts: '{{ host }}'
+  tasks:
+  - name: Update playbooks
+    git:
+      repo: 'https://github.com/nicolamarangoni/playbooks.git'
+      dest: ~/playbooks
+      clone: no
+      update: yes
