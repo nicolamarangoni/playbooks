@@ -14,5 +14,7 @@
       mysql_user:
         name: demo
         password: demo
+        update_password: on_create
         host: '%'
+        append_privs: yes
         priv: 'demo_json.*:ALL,GRANT/demo_temporal.*:ALL,GRANT'
