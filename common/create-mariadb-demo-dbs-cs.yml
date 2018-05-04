@@ -1,0 +1,22 @@
+- hosts: '{{ host }}'
+  tasks:
+    - name: add demo_flights database
+      mysql_db:
+        name: demo_flights
+        collation: utf8mb4_general_ci
+        encoding: utf8mb4
+    - name: add demo_loans database
+      mysql_db:
+        name: demo_loans
+        collation: utf8mb4_general_ci
+        encoding: utf8mb4
+    - name: add demo_opps database
+      mysql_db:
+        name: demo_opps
+        collation: utf8mb4_general_ci
+        encoding: utf8mb4
+    - name: grant privileges to demo user
+      mysql_user:
+        name: demo
+        host: '%'
+        priv: 'demo_flights.*:ALL,GRANT/demo_loans.*:ALL,GRANT/demo_opps.*:ALL,GRANT'
