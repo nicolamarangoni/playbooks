@@ -3,31 +3,31 @@
     - name: Set service type
       ini_file:
         dest: /usr/share/maxscale/maxscale.cnf
-        section: '{{ service-name }}'
+        section: '{{ service }}'
         option: type
         value: service
     - name: Set router
       ini_file:
         dest: /usr/share/maxscale/maxscale.cnf
-        section: '{{ service-name }}'
+        section: '{{ service }}'
         option: router
         value: '{{ router }}'
     - name: Set maxscale user
       ini_file:
         dest: /usr/share/maxscale/maxscale.cnf
-        section: '{{ service-name }}'
+        section: '{{ service }}'
         option: user
         value: maxscale
     - name: Set maxscale password
       ini_file:
         dest: /usr/share/maxscale/maxscale.cnf
-        section: '{{ service-name }}'
+        section: '{{ service }}'
         option: passwd
         value: '{{ password }}'
     - name: Set rw servers
       ini_file:
         dest: /usr/share/maxscale/maxscale.cnf
-        section: '{{ service-name }}'
+        section: '{{ service }}'
         option: servers
         value: '{{ servers }}'
     - name: Set listener
@@ -47,7 +47,7 @@
         dest: /usr/share/maxscale/maxscale.cnf
         section: '{{ listener_name }}'
         option: service
-        value: '{{ service-name }}'
+        value: '{{ service }}'
     - name: Set port
       ini_file:
         dest: /usr/share/maxscale/maxscale.cnf
