@@ -23,4 +23,4 @@
         dest: /usr/share/maxscale/maxscale.cnf
         section: '{{ server-host }}'
         option: port
-        value: '{{ port }}'
+        value: '{{ server-port }}'
