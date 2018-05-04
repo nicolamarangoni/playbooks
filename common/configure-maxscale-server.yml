@@ -17,7 +17,7 @@
         dest: /usr/share/maxscale/maxscale.cnf
         section: '{{ server_host }}'
         option: address
-        value: '{{ server_host }}'
+        value: '{{ server_ip }}'
     - name: Set port
       ini_file:
         dest: /usr/share/maxscale/maxscale.cnf
