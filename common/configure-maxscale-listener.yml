@@ -1,0 +1,26 @@
+- hosts: '{{ host }}'
+  tasks:
+    - name: Set listener
+      ini_file:
+        dest: /etc/maxscale.cnf
+        section: '{{ listener_name }}'
+        option: type
+        value: listener
+    - name: Set protocol
+      ini_file:
+        dest: /etc/maxscale.cnf
+        section: '{{ listener_name }}'
+        option: protocol
+        value: MariaDBClient
+    - name: Assign service to listener
+      ini_file:
+        dest: /etc/maxscale.cnf
+        section: '{{ listener_name }}'
+        option: service
+        value: '{{ service }}'
+    - name: Set port
+      ini_file:
+        dest: /etc/maxscale.cnf
+        section: '{{ listener_name }}'
+        option: port
+        value: '{{ listener_port }}'

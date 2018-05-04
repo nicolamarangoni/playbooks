@@ -1,0 +1,20 @@
+- hosts: '{{ host }}'
+  tasks:
+    - name: Set service type
+      ini_file:
+        dest: /etc/maxscale.cnf
+        section: maxscale
+        option: threads
+        value: auto
+    - name: Set service type
+      ini_file:
+        dest: /etc/maxscale.cnf
+        section: service-maxadmin
+        option: type
+        value: service
+    - name: Set router
+      ini_file:
+        dest: /etc/maxscale.cnf
+        section: service-maxadmin
+        option: router
+        value: cli
