@@ -2,43 +2,43 @@
   tasks:
     - name: Set service type
       ini_file:
-        dest: /usr/share/maxscale/maxscale.cnf
+        dest: /etc/maxscale.cnf
         section: maxscale
         option: threads
         value: auto
     - name: Set service type
       ini_file:
-        dest: /usr/share/maxscale/maxscale.cnf
+        dest: /etc/maxscale.cnf
         section: service-maxadmin
         option: type
         value: service
     - name: Set router
       ini_file:
-        dest: /usr/share/maxscale/maxscale.cnf
+        dest: /etc/maxscale.cnf
         section: service-maxadmin
         option: router
         value: cli
     - name: Set listener type
       ini_file:
-        dest: /usr/share/maxscale/maxscale.cnf
+        dest: /etc/maxscale.cnf
         section: listener-maxadmin
         option: type
         value: listener
     - name: Set service
       ini_file:
-        dest: /usr/share/maxscale/maxscale.cnf
+        dest: /etc/maxscale.cnf
         section: listener-maxadmin
         option: service
         value: service-maxadmin
     - name: Set protocol
       ini_file:
-        dest: /usr/share/maxscale/maxscale.cnf
+        dest: /etc/maxscale.cnf
         section: listener-maxadmin
         option: protocol
         value: maxscaled
     - name: Set socket
       ini_file:
-        dest: /usr/share/maxscale/maxscale.cnf
+        dest: /etc/maxscale.cnf
         section: listener-maxadmin
         option: socket
         value: default

@@ -2,25 +2,25 @@
   tasks:
     - name: Set service type
       ini_file:
-        dest: /usr/share/maxscale/maxscale.cnf
+        dest: /etc/maxscale.cnf
         section: '{{ server_host }}'
         option: type
         value: server
     - name: Set protocol
       ini_file:
-        dest: /usr/share/maxscale/maxscale.cnf
+        dest: /etc/maxscale.cnf
         section: '{{ server_host }}'
         option: protocol
         value: MariaDBBackend
     - name: Set server address
       ini_file:
-        dest: /usr/share/maxscale/maxscale.cnf
+        dest: /etc/maxscale.cnf
         section: '{{ server_host }}'
         option: address
         value: '{{ server_ip }}'
     - name: Set port
       ini_file:
-        dest: /usr/share/maxscale/maxscale.cnf
+        dest: /etc/maxscale.cnf
         section: '{{ server_host }}'
         option: port
         value: '{{ server_port }}'
