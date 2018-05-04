@@ -23,7 +23,7 @@
         dest: /usr/share/maxscale/maxscale.cnf
         section: '{{ service-name }}'
         option: passwd
-        value: {{ password }}
+        value: '{{ password }}'
     - name: Set rw servers
       ini_file:
         dest: /usr/share/maxscale/maxscale.cnf
