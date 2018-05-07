@@ -68,8 +68,14 @@
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
         section: galera
-        option: wsrep_sst_method
+        option: wsrep_sst_auth
         value: replication:{{ password }}
+    - name: Set galera datadir
+      ini_file:
+        dest: /etc/my.cnf.d/server.cnf
+        section: galera
+        option: datadir
+        value: /var/lib/mysql
     - name: Set galera wsrep_node_address
       ini_file:
         dest: /etc/my.cnf.d/server.cnf
