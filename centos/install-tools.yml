@@ -4,6 +4,7 @@
       yum:
         state: latest
         name:
+          - socat
           - java
           - wget
           - epel-release
