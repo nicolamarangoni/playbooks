@@ -26,3 +26,11 @@ ansible-playbook ~/playbooks/tools/ubuntu/upgrade.yml --extra-vars "host=client"
 ansible-playbook ~/playbooks/tools/ubuntu/upgrade.yml --extra-vars "host=maxscale"
 ansible-playbook ~/playbooks/tools/ubuntu/upgrade.yml --extra-vars "host=mariadb"
 ```
+## Install SQLPad
+```
+ansible-playbook ~/playbooks/tools/install-sqlpad.yml --extra-vars "host=client port=3010"
+```
+## Install Zeppelin
+```
+ansible-playbook ~/playbooks/tools/install-zeppelin.yml --extra-vars "host=client"
+```
