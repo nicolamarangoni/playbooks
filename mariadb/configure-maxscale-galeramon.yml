@@ -25,7 +25,7 @@
         dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: user
-        value: maxscale
+        value: '{{ user }}'
     - name: Set maxscale password
       ini_file:
         dest: '{{ cnf_file }}'

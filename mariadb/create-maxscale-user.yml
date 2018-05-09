@@ -2,7 +2,7 @@
   tasks:
     - name: Add maxscale user
       mysql_user:
-        name: maxscale
+        name: '{{ user }}'
         host: '%'
         password: '{{ password }}'
         priv: 'mysql.user:SELECT/mysql.tables_priv:SELECT/mysql.db:SELECT/*.*:SHOW DATABASES,REPLICATION CLIENT'

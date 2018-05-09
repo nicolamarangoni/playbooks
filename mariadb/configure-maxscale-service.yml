@@ -1,32 +1,34 @@
 - hosts: '{{ host }}'
+  vars:
+    cnf_file: /etc/maxscale.cnf
   tasks:
     - name: Set service type
       ini_file:
-        dest: /etc/maxscale.cnf
+        dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: type
         value: service
     - name: Set router
       ini_file:
-        dest: /etc/maxscale.cnf
+        dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: router
         value: '{{ router }}'
     - name: Set maxscale user
       ini_file:
-        dest: /etc/maxscale.cnf
+        dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: user
-        value: maxscale
+        value: '{{ user }}'
     - name: Set maxscale password
       ini_file:
-        dest: /etc/maxscale.cnf
+        dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: passwd
         value: '{{ password }}'
     - name: Set rw servers
       ini_file:
-        dest: /etc/maxscale.cnf
+        dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: servers
         value: '{{ servers }}'

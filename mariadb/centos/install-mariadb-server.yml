@@ -11,7 +11,7 @@
         baseurl = http://yum.mariadb.org/10.3/centos7-amd64
         gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
         gpgcheck=1
-      mode: 0644
+      mode: '0644'
   - name: install MariaDB
     yum:
       state: latest

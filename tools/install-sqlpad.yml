@@ -15,7 +15,7 @@
         global: yes
     - name: Create repository
       file:
-        name: /opt/sqlpad
+        name: /var/lib/sqlpad
         owner: sqlpad
         group: sqlpad
         recurse: yes
@@ -25,13 +25,20 @@
         content: |
           [Unit]
           Description=Service to run SQLPad Daemon
-          Documentation=
+          After=network.target
           [Service]
+          Type=simple
           User=sqlpad
           Group=sqlpad
-          Type=forking
-          WorkingDirectory=/opt/sqlpad
-          ExecStart=/usr/local/bin/sqlpad --port 3000 --dir /opt/sqlpad/db
+          WorkingDirectory=/var/lib/sqlpad
+          PIDFile=/var/run/sqlpad.pid
+          ExecStart=/bin/bash -c "/usr/bin/sqlpad --dir /var/lib/sqlpad/db --port={{ port }}"
           [Install]
           WantedBy=multi-user.target
-        mode: 0644
+        mode: '0644'
+    - name: Start Service
+      systemd:
+        daemon_reload: yes
+        name: sqlpad
+        enabled: yes
+        state: started

@@ -9,6 +9,8 @@
           - wget
           - epel-release
           - MySQL-python
+          - nodejs
+          - npm
     - name: stop firewall
       systemd:
         name: firewalld

@@ -59,17 +59,17 @@
         content: |
           [Unit]
           Description=Service to run Zeppelin Daemon
-          Documentation=
+          After=network.target
           [Service]
+          Type=forking
           User=zeppelin
           Group=zeppelin
-          Type=forking
           WorkingDirectory=/opt/zeppelin
           ExecStart=/opt/zeppelin/bin/zeppelin-daemon.sh start
           ExecStop=/opt/zeppelin/bin/zeppelin-daemon.sh stop
           [Install]
           WantedBy=multi-user.target
-        mode: 0644
+        mode: '0644'
     - name: Start Service
       systemd:
         daemon_reload: yes

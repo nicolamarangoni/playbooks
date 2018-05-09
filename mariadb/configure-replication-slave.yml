@@ -1,32 +1,34 @@
 - hosts: '{{ host }}'
+  vars:
+    cnf_file: /etc/my.cnf.d/server.cnf
   tasks:
     - name: activate binlog
       ini_file:
-        dest: /etc/my.cnf.d/server.cnf
+        dest: '{{ cnf_file }}'
         section: mariadb
         option: log_bin
         value: "{{ binlog_name }}"
     - name: assign server id
       ini_file:
-        dest: /etc/my.cnf.d/server.cnf
+        dest: '{{ cnf_file }}'
         section: mariadb
         option: server_id
         value: "{{ server_id }}"
     - name: set read-only
       ini_file:
-        dest: /etc/my.cnf.d/server.cnf
+        dest: '{{ cnf_file }}'
         section: mariadb
         option: read-only
         value: '1'
     - name: Set gtid_domain_id
       ini_file:
-        dest: /etc/my.cnf.d/server.cnf
+        dest: '{{ cnf_file }}'
         section: mariadb
         option: gtid_domain_id
         value: "{{ domain_id }}"
     - name: Set log_slave_updates
       ini_file:
-        dest: /etc/my.cnf.d/server.cnf
+        dest: '{{ cnf_file }}'
         section: mariadb
         option: log_slave_updates
         value: '1'
