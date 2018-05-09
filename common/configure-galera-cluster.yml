@@ -1,0 +1,109 @@
+- hosts: '{{ host }}'
+  vars:
+    cnf_file: /etc/my.cnf.d/server.cnf
+  tasks:
+    - name: Get hostname
+      shell: hostname
+      register: var_hostname
+    - name: debug var_hostname
+      debug: msg="var_hostname {{ var_hostname.stdout }}"
+    - name: Get IP
+      shell: hostname -I | awk '{print $1}'
+      register: var_ip
+    - name: debug var_ip
+      debug: msg="var_ip {{ var_ip.stdout }}"
+    - name: Set galera binlog_format
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: galera
+        option: binlog_format
+        value: ROW
+    - name: Set galera default-storage-engine
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: galera
+        option: default-storage-engine
+        value: innodb
+    - name: Set galera innodb_autoinc_lock_mode
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: galera
+        option: innodb_autoinc_lock_mode
+        value: '2'
+    - name: Set galera bind-address
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: galera
+        option: bind-address
+        value: 0.0.0.0
+    - name: Set galera wsrep_on
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: galera
+        option: wsrep_on
+        value: 'ON'
+    - name: Set galera wsrep_provider
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: galera
+        option: wsrep_provider
+        value: /usr/lib64/galera/libgalera_smm.so
+    - name: Set galera wsrep_cluster_name
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: galera
+        option: wsrep_cluster_name
+        value: "{{ cluster_name }}"
+    - name: Set galera wsrep_cluster_address
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: galera
+        option: wsrep_cluster_address
+        value: "gcomm://{{ cluster_address }}"
+    - name: Set galera wsrep_sst_method
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: galera
+        option: wsrep_sst_method
+        value: mariabackup
+    - name: Set galera wsrep_sst_auth
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: galera
+        option: wsrep_sst_auth
+        value: replication:{{ password }}
+    - name: Set galera datadir
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: galera
+        option: datadir
+        value: /var/lib/mysql
+    - name: Set galera wsrep_node_address
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: galera
+        option: wsrep_node_address
+        value: "{{ var_ip.stdout }}"
+    - name: Set galera wsrep_node_name
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: galera
+        option: wsrep_node_name
+        value: "{{ var_hostname.stdout }}"
+    - name: Set gtid_domain_id
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: galera
+        option: gtid_domain_id
+        value: "{{ domain_id }}"
+    - name: Set log_slave_updates
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: galera
+        option: log_slave_updates
+        value: '1'
+    - name: Disable mariadb service
+      systemd:
+        name: mariadb
+        enabled: no
+        state: stopped
