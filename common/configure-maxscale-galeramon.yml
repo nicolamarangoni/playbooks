@@ -1,38 +1,40 @@
 - hosts: '{{ host }}'
+  vars:
+    cnf_file: /etc/maxscale.cnf
   tasks:
     - name: Set monitor type
       ini_file:
-        dest: /etc/maxscale.cnf
+        dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: type
         value: monitor
     - name: Set module
       ini_file:
-        dest: /etc/maxscale.cnf
+        dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: module
         value: galeramon
     - name: Set monitor_interval
       ini_file:
-        dest: /etc/maxscale.cnf
+        dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: monitor_interval
         value: '2000'
     - name: Set maxscale user
       ini_file:
-        dest: /etc/maxscale.cnf
+        dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: user
         value: maxscale
     - name: Set maxscale password
       ini_file:
-        dest: /etc/maxscale.cnf
+        dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: passwd
         value: '{{ password }}'
     - name: Set galera servers
       ini_file:
-        dest: /etc/maxscale.cnf
+        dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: servers
         value: '{{ servers }}'
