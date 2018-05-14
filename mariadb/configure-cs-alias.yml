@@ -1,0 +1,7 @@
+- hosts: '{{ host }}'
+  tasks:
+    - name: Create installer script
+      copy:
+        dest: /etc/profile.d/mysqlAlias.sh
+        content: |
+          alias mysql=/usr/local/mariadb/columnstore/mysql/bin/mysql
