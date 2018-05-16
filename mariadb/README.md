@@ -102,7 +102,7 @@ ansible-playbook ~/playbooks/mariadb/configure-maxscale-service.yml \
 Configure listeners:
 ```
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
-  --extra-vars "host=maxscale protocol=maxscaled"
+  --extra-vars "host=maxscale protocol=maxscaled service=service-maxadmin listener_name=listener-maxadmin socket=default"
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
   --extra-vars "host=maxscale protocol=MariaDBClient service=service-rwsplit listener_name=listener-rwsplit listener_port=4006"
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \

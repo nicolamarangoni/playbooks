@@ -22,8 +22,16 @@
         option: service
         value: '{{ service }}'
     - name: Set port
+      when: port is defined
       ini_file:
         dest: '{{ cnf_file }}'
         section: '{{ listener_name }}'
         option: port
         value: '{{ listener_port }}'
+    - name: Set socket
+      when: socket is defined
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: listener-maxadmin
+        option: socket
+        value: '{{ socket }}'
