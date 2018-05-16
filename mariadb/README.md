@@ -1,4 +1,9 @@
 # How to use these playbooks
+## Install MariaDB client
+Install Server on a group of hosts
+```
+ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-client.yml --extra-vars "host=client00"
+```
 ## Install MariaDB server
 Install Server on a group of hosts for a galera cluster
 ```
