@@ -19,7 +19,7 @@
         dest: '{{ cnf_file }}'
         section: '{{ server_host }}'
         option: address
-        value: '{{ server_ip }}'
+        value: '{{ server_address }}'
     - name: Set port
       ini_file:
         dest: '{{ cnf_file }}'

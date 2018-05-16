@@ -62,24 +62,37 @@ ansible-playbook ~/playbooks/mariadb/create-maxscale-user.yml --extra-vars "host
 Configure servers:
 ```
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-server.yml \
-  --extra-vars "host=maxscale server_host=mariadb00 server_ip=mariadb00 server_port=3306"
+  --extra-vars "host=maxscale server_host=mariadb00 server_address=mariadb00 server_port=3306"
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-server.yml \
-  --extra-vars "host=maxscale server_host=mariadb01 server_ip=mariadb01 server_port=3306"
+  --extra-vars "host=maxscale server_host=mariadb01 server_address=mariadb01 server_port=3306"
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-server.yml \
-  --extra-vars "host=maxscale server_host=mariadb02 server_ip=mariadb02 server_port=3306"
+  --extra-vars "host=maxscale server_host=mariadb02 server_address=mariadb02 server_port=3306"
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-server.yml \
-  --extra-vars "host=maxscale server_host=mariadb03 server_ip=mariadb03 server_port=3306"
+  --extra-vars "host=maxscale server_host=mariadb03 server_address=mariadb03 server_port=3306"
 ```
-Configure services:
+Configure MaxScale CLI service:
 ```
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-service-cli.yml \
   --extra-vars "host=maxscale"
+```
+Configure galera monitor:
+```
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-galeramon.yml \
   --extra-vars "host=maxscale service=service-galeramon password=maxscale servers=mariadb00,mariadb01,mariadb02"
+```
+Configure router services
+```
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-service.yml \
   --extra-vars "host=maxscale service=service-rwsplit router=readwritesplit password=maxscale servers=mariadb00,mariadb01,mariadb02,mariadb03"
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-service.yml \
   --extra-vars "host=maxscale service=service-readonly router=readconnroute password=maxscale servers=mariadb03"
+```
+Configure avro service:
+```
+ansible-playbook ~/playbooks/mariadb/configure-maxscale-service.yml \
+  --extra-vars "host=maxscale service=service-replication router=binlogrouter password=maxscale server_id=4000 server_id=3000 binlogdir=/var/lib/maxscale"
+ansible-playbook ~/playbooks/mariadb/configure-maxscale-service.yml \
+  --extra-vars "host=maxscale service=service-avro router=avrorouter password=maxscale source=service-replication"
 ```
 Configure listeners:
 ```
@@ -89,4 +102,8 @@ ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
   --extra-vars "host=maxscale service=service-rwsplit listener_name=listener-rwsplit listener_port=4006"
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
   --extra-vars "host=maxscale service=service-readonly listener_name=listener-readonly listener_port=4008"
+ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
+  --extra-vars "host=maxscale service=service-replication listener_name=listener-replication listener_port=3306"
+ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
+  --extra-vars "host=maxscale service=service-avro listener_name=listener-avro listener_port=4001"
 ```
