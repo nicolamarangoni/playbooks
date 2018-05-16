@@ -1,0 +1,31 @@
+- hosts: '{{ host }}'
+  tasks:
+  - name: create MariaDB.repo
+    copy:
+      dest: '/etc/yum.repos.d/MariaDB.repo'
+      content: |
+        # MariaDB 10.3 CentOS repository list - created 2018-05-02 09:30 UTC
+        # http://downloads.mariadb.org/mariadb/repositories/
+        [mariadb]
+        name = MariaDB
+        baseurl = http://yum.mariadb.org/10.3/centos7-amd64
+        gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+        gpgcheck=1
+      mode: '0644'
+  - name: install MariaDB
+    yum:
+      state: latest
+      name:
+        - epel-release
+        - MySQL-python
+        - MariaDB-client
+  - name: restart server
+    systemd:
+      name: mariadb
+      daemon_reload: yes
+      state: restarted
+  - name: stop firewall
+    systemd:
+      name: firewalld
+      enabled: no
+      state: stopped
