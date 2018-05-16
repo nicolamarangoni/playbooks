@@ -22,7 +22,7 @@
         option: service
         value: '{{ service }}'
     - name: Set port
-      when: port is defined
+      when: listener_port is defined
       ini_file:
         dest: '{{ cnf_file }}'
         section: '{{ listener_name }}'
