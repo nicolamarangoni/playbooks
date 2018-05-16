@@ -28,11 +28,11 @@
         value: '{{ password }}'
     - name: Set servers
       ini_file:
+        when: servers is defined
         dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: servers
         value: '{{ servers }}'
-        when: servers is defined
     - name: Set server_id
       ini_file:
         dest: '{{ cnf_file }}'
