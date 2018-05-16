@@ -27,37 +27,37 @@
         option: passwd
         value: '{{ password }}'
     - name: Set servers
+      when: servers is defined
       ini_file:
-        when: servers is defined
         dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: servers
         value: '{{ servers }}'
     - name: Set server_id
+      when: server_id is defined
       ini_file:
         dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: server_id
         value: '{{ server_id }}'
-        when: server_id is defined
     - name: Set master_id
+      when: master_id is defined
       ini_file:
         dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: master_id
         value: '{{ master_id }}'
-        when: master_id is defined
     - name: Set binlogdir
+      when: binlogdir is defined
       ini_file:
         dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: binlogdir
         value: '{{ binlogdir }}'
-        when: binlogdir is defined
     - name: Set source
+      when: source is defined
       ini_file:
         dest: '{{ cnf_file }}'
         section: '{{ service }}'
         option: source
         value: '{{ source }}'
-        when: source is defined
