@@ -95,9 +95,9 @@ ansible-playbook ~/playbooks/mariadb/configure-maxscale-service.yml \
 Configure avro service:
 ```
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-service.yml \
-  --extra-vars "host=maxscale user=maxscale password=maxscale service=service-replication router=binlogrouter server_id=4000 server_id=3000 binlogdir=/var/lib/maxscale"
+  --extra-vars "host=maxscale user=maxscale password=maxscale service=service-replication router=binlogrouter server_id=4000 master_id=3000 binlogdir=/var/lib/maxscale/binlog"
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-service.yml \
-  --extra-vars "host=maxscale user=maxscale password=maxscale service=service-avro router=avrorouter source=service-replication"
+  --extra-vars "host=maxscale user=maxscale password=maxscale service=service-avro router=avrorouter source=service-replication router_options=avrodir=/var/lib/maxscale/avro/,filestem=binlog"
 ```
 Configure listeners:
 ```
@@ -111,4 +111,23 @@ ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
   --extra-vars "host=maxscale protocol=MariaDBClient service=service-replication listener_name=listener-replication listener_port=3306"
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
   --extra-vars "host=maxscale protocol=CDC service=service-avro listener_name=listener-avro listener_port=4001"
+```
+## Start MaxScale Replication
+On a host with mariadb-client installed:
+```
+mysql -h maxscale00 -u maxscale -p
+```
+Start slave:
+```
+CHANGE MASTER TO MASTER_HOST='mariadb03', MASTER_PORT=3306, MASTER_USER='replication', MASTER_PASSWORD='mariadb', MASTER_LOG_FILE='galera00.000008', MASTER_LOG_POS=2641;
+
+START SLAVE;
+```
+Create cdc user
+```
+maxadmin call command cdc add_user service-avro cdcuser cdcpasswd
+```
+Check cdc content:
+```
+cdc.py -u cdcuser -p cdcpasswd -h maxscale00 -P 4001 demo.tbl_demo
 ```

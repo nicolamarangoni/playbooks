@@ -61,3 +61,10 @@
         section: '{{ service }}'
         option: source
         value: '{{ source }}'
+    - name: Set router_options
+      when: router_options is defined
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: '{{ service }}'
+        option: router_options
+        value: '{{ router_options }}'
