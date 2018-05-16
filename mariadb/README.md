@@ -83,16 +83,16 @@ ansible-playbook ~/playbooks/mariadb/configure-maxscale-galeramon.yml \
 Configure router services
 ```
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-service.yml \
-  --extra-vars "host=maxscale service=service-rwsplit router=readwritesplit password=maxscale servers=mariadb00,mariadb01,mariadb02,mariadb03"
+  --extra-vars "host=maxscale user=maxscale password=maxscale service=service-rwsplit router=readwritesplit servers=mariadb00,mariadb01,mariadb02,mariadb03"
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-service.yml \
-  --extra-vars "host=maxscale service=service-readonly router=readconnroute password=maxscale servers=mariadb03"
+  --extra-vars "host=maxscale user=maxscale password=maxscale service=service-readonly router=readconnroute servers=mariadb03"
 ```
 Configure avro service:
 ```
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-service.yml \
-  --extra-vars "host=maxscale service=service-replication router=binlogrouter password=maxscale server_id=4000 server_id=3000 binlogdir=/var/lib/maxscale"
+  --extra-vars "host=maxscale user=maxscale password=maxscale service=service-replication router=binlogrouter server_id=4000 server_id=3000 binlogdir=/var/lib/maxscale"
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-service.yml \
-  --extra-vars "host=maxscale service=service-avro router=avrorouter password=maxscale source=service-replication"
+  --extra-vars "host=maxscale user=maxscale password=maxscale service=service-avro router=avrorouter source=service-replication"
 ```
 Configure listeners:
 ```
