@@ -9,11 +9,12 @@
         option: type
         value: listener
     - name: Set protocol
+      when: protocol is defined
       ini_file:
         dest: '{{ cnf_file }}'
         section: '{{ listener_name }}'
         option: protocol
-        value: MariaDBClient
+        value: '{{ protocol }}'
     - name: Assign service to listener
       ini_file:
         dest: '{{ cnf_file }}'

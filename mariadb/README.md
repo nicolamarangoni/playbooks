@@ -83,7 +83,7 @@ ansible-playbook ~/playbooks/mariadb/configure-maxscale-service-cli.yml \
 Configure galera monitor:
 ```
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-galeramon.yml \
-  --extra-vars "host=maxscale service=service-galeramon password=maxscale servers=mariadb00,mariadb01,mariadb02"
+  --extra-vars "host=maxscale user=maxscale password=maxscale service=service-galeramon servers=mariadb00,mariadb01,mariadb02"
 ```
 Configure router services
 ```
@@ -101,14 +101,14 @@ ansible-playbook ~/playbooks/mariadb/configure-maxscale-service.yml \
 ```
 Configure listeners:
 ```
-ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener-cli.yml \
-  --extra-vars "host=maxscale"
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
-  --extra-vars "host=maxscale service=service-rwsplit listener_name=listener-rwsplit listener_port=4006"
+  --extra-vars "host=maxscale protocol=maxscaled"
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
-  --extra-vars "host=maxscale service=service-readonly listener_name=listener-readonly listener_port=4008"
+  --extra-vars "host=maxscale protocol=MariaDBClient service=service-rwsplit listener_name=listener-rwsplit listener_port=4006"
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
-  --extra-vars "host=maxscale service=service-replication listener_name=listener-replication listener_port=3306"
+  --extra-vars "host=maxscale protocol=MariaDBClient service=service-readonly listener_name=listener-readonly listener_port=4008"
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
-  --extra-vars "host=maxscale service=service-avro listener_name=listener-avro listener_port=4001"
+  --extra-vars "host=maxscale protocol=MariaDBClient service=service-replication listener_name=listener-replication listener_port=3306"
+ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
+  --extra-vars "host=maxscale protocol=CDC service=service-avro listener_name=listener-avro listener_port=4001"
 ```
