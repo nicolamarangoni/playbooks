@@ -5,7 +5,9 @@
         name: root
         password: '{{ password }}'
     - name: create ~/.my.cnf
-      when: create_cnf==yes
+      when:
+        - create_cnf is defined
+        - create_cnf == "yes"
       copy:
         dest: '~/.my.cnf'
         content: |
