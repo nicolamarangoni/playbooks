@@ -145,8 +145,10 @@ yum -y install mariadb-columnstore-api-1.1.4-1-x86_64-centos7.rpm
 wget https://downloads.mariadb.com/Data-Adapters/mariadb-streaming-data-adapters/cdc-data-adapter/1.1.4/centos-7/mariadb-columnstore-maxscale-cdc-adapters-1.1.4-1-x86_64-centos7.rpm
 yum -y install mariadb-columnstore-maxscale-cdc-adapters-1.1.4-1-x86_64-centos7.rpm
 ```
+Start CDC ingestion
+```
 mxs_adapter -u cdcuser -p cdcpasswd -h maxscale00 -P 4001 demo tbl_demo
-
+```
 ## Purge replication files
 ```
 systemctl stop maxscale

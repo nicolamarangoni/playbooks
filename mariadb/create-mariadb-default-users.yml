@@ -37,7 +37,7 @@
         host: '%'
         password: demo
         priv: 'demo.*:ALL,GRANT'
-    - name: add remote demo
+    - name: remove anonymous user
       mysql_user:
         name: ''
         host_all: yes
