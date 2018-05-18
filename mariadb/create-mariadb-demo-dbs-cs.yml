@@ -18,5 +18,6 @@
     - name: grant privileges to demo user
       mysql_user:
         name: demo
+        append_privs: yes
         host: '%'
         priv: 'demo_flights.*:ALL,GRANT/demo_loans.*:ALL,GRANT/demo_opps.*:ALL,GRANT'

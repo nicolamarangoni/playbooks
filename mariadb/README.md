@@ -11,7 +11,7 @@ ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-server.yml --extra-v
 ```
 Create default users on the first host:
 ```
-ansible-playbook ~/playbooks/mariadb/create-mariadb-default-users.yml --extra-vars "host=mariadb00 password=mariadb"
+ansible-playbook ~/playbooks/mariadb/create-mariadb-default-users.yml --extra-vars "host=mariadb00 password=mariadb create_cnf=yes"
 ```
 ## Configure a cluster
 Configure galera:
@@ -95,7 +95,7 @@ ansible-playbook ~/playbooks/mariadb/configure-maxscale-service.yml \
 Configure avro service:
 ```
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-service.yml \
-  --extra-vars "host=maxscale user=maxscale password=maxscale service=service-replication router=binlogrouter server_id=4000 master_id=3000 router_options=binlogdir=/var/lib/maxscale/binlog"
+  --extra-vars "host=maxscale user=maxscale password=maxscale service=service-replication router=binlogrouter server_id=4000 master_id=3000 router_options=binlogdir=/var/lib/maxscale/binlog,mariadb10-compatibility=1"
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-service.yml \
   --extra-vars "host=maxscale user=maxscale password=maxscale service=service-avro router=avrorouter source=service-replication router_options=avrodir=/var/lib/maxscale/avro,filestem=galera00"
 ```
@@ -131,6 +131,22 @@ Check cdc content:
 ```
 cdc.py -u cdcuser -p cdcpasswd -h maxscale00 -P 4001 demo.tbl_demo
 ```
+## CDC Adapter for the ColumnStore
+To be performed on the User Module of the AX cluster
+
+Download and install:
+```
+wget https://downloads.mariadb.com/MaxScale/2.2.5/centos/7/x86_64/maxscale-cdc-connector-2.2.5-1.centos.7.x86_64.rpm
+yum -y install maxscale-cdc-connector-2.2.5-1.centos.7.x86_64.rpm
+
+wget https://downloads.mariadb.com/Data-Adapters/mariadb-columnstore-api/1.1.4/centos/x86_64/7/mariadb-columnstore-api-1.1.4-1-x86_64-centos7.rpm
+yum -y install mariadb-columnstore-api-1.1.4-1-x86_64-centos7.rpm
+
+wget https://downloads.mariadb.com/Data-Adapters/mariadb-streaming-data-adapters/cdc-data-adapter/1.1.4/centos-7/mariadb-columnstore-maxscale-cdc-adapters-1.1.4-1-x86_64-centos7.rpm
+yum -y install mariadb-columnstore-maxscale-cdc-adapters-1.1.4-1-x86_64-centos7.rpm
+```
+mxs_adapter -u cdcuser -p cdcpasswd -h maxscale00 -P 4001 demo tbl_demo
+
 ## Purge replication files
 ```
 systemctl stop maxscale
