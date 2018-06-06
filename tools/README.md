@@ -20,9 +20,9 @@ ansible-playbook ~/playbooks/tools/ubuntu/upgrade.yml --extra-vars "host=all"
 ```
 ## Install SQLPad
 ```
-ansible-playbook ~/playbooks/tools/install-sqlpad.yml --extra-vars "host=client port=3010"
+ansible-playbook ~/playbooks/tools/install-sqlpad.yml --extra-vars "host=clients port=3010"
 ```
 ## Install Zeppelin
 ```
-ansible-playbook ~/playbooks/tools/install-zeppelin.yml --extra-vars "host=client"
+ansible-playbook ~/playbooks/tools/install-zeppelin.yml --extra-vars "host=clients version=0.7.3"
 ```

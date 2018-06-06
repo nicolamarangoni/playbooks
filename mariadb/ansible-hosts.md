@@ -1,0 +1,41 @@
+# Ansible Hosts
+Fill /etc/ansible/hosts
+```
+tee /etc/ansible/hosts > /dev/null <<EOF
+all:
+  children:
+    clients:
+      hosts:
+        client00:
+    maxscale:
+      hosts:
+        maxscale00:
+    mariadb:
+      children:
+        mariadb-tx:
+          children:
+            galera-cluster:
+              children:
+                galera-boot:
+                  hosts:
+                    mariadb00:
+                galera-join:
+                  hosts:
+                    mariadb01:
+                    mariadb02:
+            mariadb-slaves:
+              hosts:
+                mariadb03:
+        mariadb-ax:
+          children:
+            ax-um:
+              hosts:
+                mariadb10:
+                mariadb11:
+            ax-pm:
+              hosts:
+                mariadb12:
+                mariadb13:
+                mariadb14:
+EOF
+```
