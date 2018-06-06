@@ -12,13 +12,9 @@ git pull
 ```
 On several hosts with ansible:
 ```
-ansible-playbook ~/playbooks/tools/update-playbooks.yml --extra-vars "host=client"
-ansible-playbook ~/playbooks/tools/update-playbooks.yml --extra-vars "host=maxscale"
-ansible-playbook ~/playbooks/tools/update-playbooks.yml --extra-vars "host=mariadb"
+ansible-playbook ~/playbooks/tools/update-playbooks.yml --extra-vars "host=all"
 ```
 ## Upgrade system
 ```
-ansible-playbook ~/playbooks/tools/centos/upgrade.yml --extra-vars "host=client"
-ansible-playbook ~/playbooks/tools/centos/upgrade.yml --extra-vars "host=maxscale"
-ansible-playbook ~/playbooks/tools/centos/upgrade.yml --extra-vars "host=mariadb"
+ansible-playbook ~/playbooks/tools/centos/upgrade.yml --extra-vars "host=all"
 ```

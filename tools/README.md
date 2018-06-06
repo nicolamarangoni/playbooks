@@ -2,29 +2,21 @@
 ## Prepare host
 CentOS
 ```
-ansible-playbook ~/playbooks/tools/centos/prepare-host.yml --extra-vars "host=client"
-ansible-playbook ~/playbooks/tools/centos/prepare-host.yml --extra-vars "host=maxscale"
-ansible-playbook ~/playbooks/tools/centos/prepare-host.yml --extra-vars "host=mariadb"
+ansible-playbook ~/playbooks/tools/centos/prepare-host.yml --extra-vars "host=all"
 ```
 Ubuntu
 ```
-ansible-playbook ~/playbooks/tools/ubuntu/prepare-host.yml --extra-vars "host=client"
-ansible-playbook ~/playbooks/tools/ubuntu/prepare-host.yml --extra-vars "host=maxscale"
-ansible-playbook ~/playbooks/tools/ubuntu/prepare-host.yml --extra-vars "host=mariadb"
+ansible-playbook ~/playbooks/tools/ubuntu/prepare-host.yml --extra-vars "host=all"
 ```
 
 ## Upgrade packages
 CentOS
 ```
-ansible-playbook ~/playbooks/tools/centos/upgrade.yml --extra-vars "host=client"
-ansible-playbook ~/playbooks/tools/centos/upgrade.yml --extra-vars "host=maxscale"
-ansible-playbook ~/playbooks/tools/centos/upgrade.yml --extra-vars "host=mariadb"
+ansible-playbook ~/playbooks/tools/centos/upgrade.yml --extra-vars "host=all"
 ```
 Ubuntu
 ```
-ansible-playbook ~/playbooks/tools/ubuntu/upgrade.yml --extra-vars "host=client"
-ansible-playbook ~/playbooks/tools/ubuntu/upgrade.yml --extra-vars "host=maxscale"
-ansible-playbook ~/playbooks/tools/ubuntu/upgrade.yml --extra-vars "host=mariadb"
+ansible-playbook ~/playbooks/tools/ubuntu/upgrade.yml --extra-vars "host=all"
 ```
 ## Install SQLPad
 ```

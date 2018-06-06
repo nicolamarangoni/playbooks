@@ -6,7 +6,7 @@
         id: '0xF1656F24C74CD1D8'
     - name: add mariadb repository
       apt_repository:
-        repo: deb [arch=amd64,i386] http://mirror.23media.de/mariadb/repo/10.3/ubuntu artful main
+        repo: deb [arch=amd64,i386] http://mirror.23media.de/mariadb/repo/10.3/ubuntu bionic main
     - name: install mariadb
       apt:
         update_cache: yes
