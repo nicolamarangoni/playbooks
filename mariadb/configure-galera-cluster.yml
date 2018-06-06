@@ -12,6 +12,12 @@
       register: var_ip
     - name: debug var_ip
       debug: msg="var_ip {{ var_ip.stdout }}"
+    - name: Set galera datadir
+      ini_file:
+        dest: '{{ cnf_file }}'
+        section: mysqld
+        option: datadir
+        value: /var/lib/mysql
     - name: Set galera binlog_format
       ini_file:
         dest: '{{ cnf_file }}'
@@ -72,12 +78,6 @@
         section: galera
         option: wsrep_sst_auth
         value: replication:{{ password }}
-    - name: Set galera datadir
-      ini_file:
-        dest: '{{ cnf_file }}'
-        section: galera
-        option: datadir
-        value: /var/lib/mysql
     - name: Set galera wsrep_node_address
       ini_file:
         dest: '{{ cnf_file }}'
