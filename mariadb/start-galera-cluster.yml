@@ -10,8 +10,12 @@
       name: mariadb
       enabled: no
       state: stopped
+  - name: Verify existance of /var/lib/mysql/grastate.dat
+    stat: path=/var/lib/mysql/grastate.dat
+    register: grastate
   - name: Set safe_to_bootstrap to 1 (in case of startup error)
     command: "sed -i 's/safe_to_bootstrap: 0/safe_to_bootstrap: 1/g' /var/lib/mysql/grastate.dat"
+    when: grastate.stat.exists
   - name: Start boot node
     command: galera_new_cluster
 - hosts: '{{ host_join }}'
