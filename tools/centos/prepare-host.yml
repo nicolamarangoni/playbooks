@@ -1,8 +1,9 @@
 - hosts: '{{ host }}'
   tasks:
     - name: configure nodejs repository
-      url: https://rpm.nodesource.com/setup_10.x
-      dest: '~'
+      get_url:
+        url: https://rpm.nodesource.com/setup_10.x
+        dest: '~'
     - name: Prepare nodejs installation
       command: sh ~/setup_10.x
     - name: install common tools
