@@ -17,7 +17,8 @@
           - epel-release
           - MySQL-python
           - nodejs
-          - npm
+          - gcc-c++
+          - make
     - name: stop firewall
       systemd:
         name: firewalld
