@@ -19,6 +19,7 @@
           - nodejs
           - gcc-c++
           - make
+          - nmap-ncat
     - name: stop firewall
       systemd:
         name: firewalld

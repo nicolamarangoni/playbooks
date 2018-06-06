@@ -47,4 +47,4 @@
         name: replication
         host: '%'
         password: '{{ password }}'
-        priv: '*.*:RELOAD,LOCK TABLES,REPLICATION SLAVE'
+        priv: '*.*:RELOAD,LOCK TABLES,REPLICATION SLAVE,REPLICATION CLIENT'
