@@ -1,7 +1,10 @@
 - hosts: '{{ host }}'
   tasks:
     - name: configure nodejs repository
-      command: sh "curl --silent --location https://rpm.nodesource.com/setup_10.x | bash -"
+      url: https://rpm.nodesource.com/setup_10.x
+      dest: '~'
+    - name: Prepare nodejs installation
+      command: sh ~/setup_10.x
     - name: install common tools
       yum:
         state: latest
