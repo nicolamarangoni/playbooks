@@ -1,8 +1,8 @@
 # How to use these playbooks
 ## Install MariaDB client
-Install Server on a group of hosts
+Install Client on a group of hosts
 ```
-ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-client.yml --extra-vars "host=client00"
+ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-client.yml --extra-vars "host=clients"
 ```
 ## Install MariaDB server
 Install Server on a group of hosts for a galera cluster
@@ -17,7 +17,7 @@ ansible-playbook ~/playbooks/mariadb/create-mariadb-default-users.yml --extra-va
 Configure galera:
 ```
 ansible-playbook ~/playbooks/mariadb/configure-galera-cluster.yml \
-  --extra-vars "host=galera-cluster cluster_name=galera00 domain_id=0 cluster_address=192.168.56.100,192.168.56.101,192.168.56.102 password=mariadb"
+  --extra-vars "host=galera-cluster cluster_name=galera00 domain_id=0 cluster_address=mariadb00,mariadb01,mariadb02 password=mariadb"
 ```
 Start galera:
 ```

@@ -4,12 +4,12 @@
       mysql_user:
         name: root
         password: '{{ password }}'
-    - name: create ~/.my.cnf
+    - name: create /root/.my.cnf
       when:
         - create_cnf is defined
         - create_cnf == "yes"
       copy:
-        dest: '~/.my.cnf'
+        dest: '/root/.my.cnf'
         content: |
           [client]
           user=root
