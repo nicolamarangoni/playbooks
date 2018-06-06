@@ -28,13 +28,13 @@ Stop galera:
 ansible-playbook ~/playbooks/mariadb/stop-galera-cluster.yml --extra-vars "host_boot=galera-boot host_join=galera-join"
 ```
 ## Configure a read-only slave for the galera cluster
-Install Server on the slave host
+Install Server on the slave hosts:
 ```
-ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-server.yml --extra-vars "host=mariadb03"
+ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-server.yml --extra-vars "host=mariadb-slaves"
 ```
-Create default users on the first host:
+Create default users on the slave hosts:
 ```
-ansible-playbook ~/playbooks/mariadb/create-mariadb-default-users.yml --extra-vars "host=mariadb03 password=mariadb"
+ansible-playbook ~/playbooks/mariadb/create-mariadb-default-users.yml --extra-vars "host=mariadb-slaves password=mariadb create_cnf=yes"
 ```
 Galera nodes (masters):
 ```
@@ -53,6 +53,31 @@ ansible-playbook ~/playbooks/mariadb/start-galera-cluster.yml --extra-vars "host
 Slave:
 ```
 ansible-playbook ~/playbooks/mariadb/configure-replication-slave.yml --extra-vars "host=mariadb03 server_id=3 binlog_name=galera00 domain_id=0"
+```
+## Start replication
+On the slave (mariadb03):
+```
+systemctl restart mariadb
+```
+On the master (login to the database):
+```
+SHOW MASTER STATUS;
+```
+Take the values in the field *Files* and *Position*
+
+On the slave (login to the database):
+```
+CHANGE MASTER TO
+  MASTER_USE_GTID = current_pos,
+  MASTER_HOST='mariadb01',
+  MASTER_USER='replication',
+  MASTER_PASSWORD='mariadb',
+  MASTER_PORT=3306,
+  MASTER_LOG_FILE='galera00.000001', -- File read on the master
+  MASTER_LOG_POS=000, -- Position read on the master
+  MASTER_CONNECT_RETRY=10;
+
+START SLAVE;
 ```
 ## Configure maxscale
 Install MaxScale:
