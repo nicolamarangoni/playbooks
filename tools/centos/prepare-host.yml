@@ -1,7 +1,7 @@
 - hosts: '{{ host }}'
   tasks:
     - name: configure nodejs repository
-      command: curl --silent --location https://rpm.nodesource.com/setup_10.x | sudo bash -
+      command: "curl --silent --location https://rpm.nodesource.com/setup_10.x | sudo bash -"
     - name: install common tools
       yum:
         state: latest
