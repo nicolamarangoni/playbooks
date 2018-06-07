@@ -29,6 +29,7 @@
           - MySQL-python
           - nodejs
           - ansible
+    - name: stop firewall
       systemd:
         name: firewalld
         enabled: no
