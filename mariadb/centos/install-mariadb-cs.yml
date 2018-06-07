@@ -33,7 +33,7 @@
 #        src: ~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
 #        dest: '~'
     - name: Create installer script
-      command: echo "yum -y install ~/mariadb-columnstore-*.rpm" > ~/mariadb-columnstore-install.sh
+      command: 'echo "yum -y install ~/mariadb-columnstore-*.rpm" > ~/mariadb-columnstore-install.sh'
     - name: Install all packages
       command: sh ~/mariadb-columnstore-install.sh
     - name: Remove archive
