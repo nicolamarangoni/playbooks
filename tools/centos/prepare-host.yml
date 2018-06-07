@@ -22,6 +22,8 @@
           - MySQL-python
           - nodejs
           - ansible
+    - name: create python3 alias
+      command: alias python3=python36
     - name: stop firewall
       systemd:
         name: firewalld
