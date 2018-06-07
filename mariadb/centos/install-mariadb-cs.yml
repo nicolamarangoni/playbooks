@@ -27,7 +27,7 @@
     - name: Decompress archive
       shell: tar -xf mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
       args:
-        chdir: /~
+        chdir: '~'
 #    - name: Extract archive
 #      unarchive:
 #        src: ~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
