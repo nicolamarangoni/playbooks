@@ -11,19 +11,24 @@
         state: latest
         name:
           - epel-release
+          - centos-release-scl
+    - name: install common tools
+      yum:
+        state: latest
+        name:
           - net-tools
           - nmap-ncat
           - socat
           - gcc-c++
           - make
           - wget
-          - python36
+          - rh-python36
           - java
           - MySQL-python
           - nodejs
           - ansible
-    - name: create python3 alias
-      command: alias python3=python36
+    - name: enable python3
+      command: scl enable rh-python36 bash
     - name: stop firewall
       systemd:
         name: firewalld
