@@ -136,6 +136,11 @@ ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
   --extra-vars "host=maxscale protocol=CDC service=service-avro listener_name=listener-avro listener_port=4001"
 ```
+## Restart maxscale
+On maxscale hosts:
+```
+systemctl restart maxscale
+```
 ## Start MaxScale Replication
 On a host with mariadb-client installed:
 ```

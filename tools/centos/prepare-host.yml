@@ -10,16 +10,18 @@
       yum:
         state: latest
         name:
-          - ansible
-          - socat
-          - java
-          - wget
           - epel-release
-          - MySQL-python
-          - nodejs
+          - net-tools
+          - nmap-ncat
+          - socat
           - gcc-c++
           - make
-          - nmap-ncat
+          - wget
+          - python36
+          - java
+          - MySQL-python
+          - nodejs
+          - ansible
     - name: stop firewall
       systemd:
         name: firewalld
