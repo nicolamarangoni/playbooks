@@ -24,10 +24,14 @@
       get_url:
         url: https://downloads.mariadb.com/ColumnStore/{{ version }}/centos/x86_64/7/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
         dest: '~'
-    - name: Extract archive
-      unarchive:
-        src: ~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
-        dest: '~'
+    - name: Decompress archive
+      shell: tar -xf mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
+      args:
+        chdir: /~
+#    - name: Extract archive
+#      unarchive:
+#        src: ~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
+#        dest: '~'
     - name: Create installer script
       copy:
         dest: ~/mariadb-columnstore-install.sh

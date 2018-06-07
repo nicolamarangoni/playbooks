@@ -3,6 +3,7 @@
 Install Client on a group of hosts
 ```
 ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-client.yml --extra-vars "host=clients"
+ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-client.yml --extra-vars "host=maxscale"
 ```
 ## Install MariaDB server
 Install Server on a group of hosts for a galera cluster
@@ -55,17 +56,29 @@ Slave:
 ansible-playbook ~/playbooks/mariadb/configure-replication-slave.yml --extra-vars "host=mariadb03 server_id=3 binlog_name=galera00 domain_id=0"
 ```
 ## Start replication
-On the slave (mariadb03):
+Restart slave (mariadb03)
+```
+ansible mariadb03 -s -m shell -a 'systemctl restart mariadb'
+```
+or on the slave (mariadb03):
 ```
 systemctl restart mariadb
 ```
 On the master (login to the database):
+```
+mysql -h mariadb01 -u root -p
+```
+In the DB:
 ```
 SHOW MASTER STATUS;
 ```
 Take the values in the field *Files* and *Position*
 
 On the slave (login to the database):
+```
+mysql -h mariadb03 -u root -p
+```
+In the DB:
 ```
 CHANGE MASTER TO
   MASTER_USE_GTID = current_pos,
@@ -142,23 +155,77 @@ On maxscale hosts:
 systemctl restart maxscale
 ```
 ## Start MaxScale Replication
-On a host with mariadb-client installed:
+Connect to the master for the maxscale replication service:
+```
+mysql -h mariadb03 -u root -p
+```
+In the DB:
+```
+SHOW MASTER STATUS;
+```
+Take the values in the field *Files* and *Position*
+
+Connect to the maxscale replication service:
 ```
 mysql -h maxscale00 -u maxscale -p
 ```
-Start slave:
+Configure and start slave:
 ```
-CHANGE MASTER TO MASTER_HOST='mariadb03', MASTER_PORT=3306, MASTER_USER='replication', MASTER_PASSWORD='mariadb', MASTER_LOG_FILE='galera00.000001', MASTER_LOG_POS=4;
+CHANGE MASTER TO
+  MASTER_HOST='mariadb03',
+  MASTER_PORT=3306,
+  MASTER_USER='replication',
+  MASTER_PASSWORD='mariadb',
+  MASTER_LOG_FILE='galera00.000003',
+  MASTER_LOG_POS=1497;
 
 START SLAVE;
 ```
-Create cdc user
+Create cdc user:
 ```
 maxadmin call command cdc add_user service-avro cdcuser cdcpasswd
 ```
+Create a table in the demo schema to test the avro service:
+```
+mysql -h mariadb02 -u demo -p <<EOF
+DROP TABLE IF EXISTS demo.tbl_demo_cdc;
+
+CREATE TABLE IF NOT EXISTS demo.tbl_demo_cdc (
+  col0 bigint PRIMARY KEY,
+  col1 text
+);
+
+DROP PROCEDURE IF EXISTS demo.prc_demo_insert_cdc;
+
+DELIMITER //
+
+CREATE PROCEDURE IF NOT EXISTS demo.prc_demo_insert_cdc()   
+BEGIN
+	DECLARE i INT DEFAULT 0;
+	WHILE (i <= 9999) DO
+		  DO SLEEP(2);
+
+      INSERT INTO tbl_demo_cdc (
+	        col0,
+	        col1
+	    ) VALUES (
+	        CURRENT_TIMESTAMP(),
+	        SUBSTRING(MD5(RAND()) FROM 1 FOR RAND()*20 +10)
+	    );
+
+	    SET i = i+1;
+	END WHILE;
+END;
+//
+EOF
+```
+
+```
+mysql -h mariadb02 -u demo -p 'CALL demo.prc_demo_insert_cdc()'
+```
 Check cdc content:
 ```
-cdc.py -u cdcuser -p cdcpasswd -h maxscale00 -P 4001 demo.tbl_demo
+cdc.py -u cdcuser -p cdcpasswd -h maxscale00 -P 4001 demo.tbl_demo_cdc
 ```
 ## CDC Adapter for the ColumnStore
 To be performed on the User Module of the AX cluster
