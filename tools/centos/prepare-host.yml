@@ -6,12 +6,11 @@
         dest: '~'
     - name: Prepare nodejs installation
       command: sh ~/setup_10.x
-    - name: install common tools
+    - name: install common collections
       yum:
         state: latest
         name:
           - epel-release
-          - centos-release-scl
     - name: install common tools
       yum:
         state: latest
@@ -22,13 +21,17 @@
           - gcc-c++
           - make
           - wget
-          - rh-python36
+          - python36
           - java
           - MySQL-python
           - nodejs
           - ansible
-    - name: enable python3
-      command: scl enable rh-python36 bash
+    - name: Create python3 alias
+      copy:
+        dest: /etc/profile.d/python3.sh
+        content: |
+          alias python3=python36
+        mode: '0644'
     - name: stop firewall
       systemd:
         name: firewalld
