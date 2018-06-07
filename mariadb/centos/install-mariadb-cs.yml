@@ -20,18 +20,14 @@
           - perl
           - perl-DBI
           - perl-DBD-MySQL
-#    - name: Download ColumnStore tar
-#      get_url:
-#        url: https://downloads.mariadb.com/ColumnStore/{{ version }}/centos/x86_64/7/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
-#        dest: '~'
+    - name: Download ColumnStore tar
+      get_url:
+        url: https://downloads.mariadb.com/ColumnStore/{{ version }}/centos/x86_64/7/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
+        dest: '~'
     - name: Decompress archive
       shell: tar -xf mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
       args:
         chdir: '~'
-#    - name: Extract archive
-#      unarchive:
-#        src: ~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
-#        dest: '~'
     - name: Create installer script
       command: 'echo "yum -y install ~/mariadb-columnstore-*.rpm" > ~/mariadb-columnstore-install.sh'
     - name: Install all packages

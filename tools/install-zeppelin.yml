@@ -17,10 +17,6 @@
       shell: tar -xf zeppelin-{{ version }}-bin-all.tgz
       args:
         chdir: /opt
-#    - name: Decompress archive
-#      unarchive:
-#        src: /opt/zeppelin-{{ version }}-bin-all.tgz
-#        dest: /opt
     - name: Remove backup folder
       file:
         path: /opt/zeppelin-backup
