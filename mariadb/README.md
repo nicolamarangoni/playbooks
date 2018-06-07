@@ -82,12 +82,11 @@ START SLAVE;
 ## Configure maxscale
 Install MaxScale:
 ```
-ansible-playbook ~/playbooks/mariadb/centos/install-maxscale.yml --extra-vars "host=maxscale version=2.2.5"
+ansible-playbook ~/playbooks/mariadb/centos/install-maxscale.yml --extra-vars "host=maxscale version=2.2.9"
 ```
 Create user:
 ```
-ansible-playbook ~/playbooks/mariadb/create-maxscale-user.yml --extra-vars "host=mariadb00 password=maxscale"
-ansible-playbook ~/playbooks/mariadb/create-maxscale-user.yml --extra-vars "host=mariadb03 password=maxscale"
+ansible-playbook ~/playbooks/mariadb/create-maxscale-user.yml --extra-vars "host=mariadb00 user=maxscale password=maxscale"
 ```
 Configure servers:
 ```
@@ -161,8 +160,8 @@ To be performed on the User Module of the AX cluster
 
 Download and install:
 ```
-wget https://downloads.mariadb.com/MaxScale/2.2.5/centos/7/x86_64/maxscale-cdc-connector-2.2.5-1.centos.7.x86_64.rpm
-yum -y install maxscale-cdc-connector-2.2.5-1.centos.7.x86_64.rpm
+wget https://downloads.mariadb.com/MaxScale/2.2.9/centos/7/x86_64/maxscale-cdc-connector-2.2.9-1.centos.7.x86_64.rpm
+yum -y install maxscale-cdc-connector-2.2.9-1.centos.7.x86_64.rpm
 
 wget https://downloads.mariadb.com/Data-Adapters/mariadb-columnstore-api/1.1.4/centos/x86_64/7/mariadb-columnstore-api-1.1.4-1-x86_64-centos7.rpm
 yum -y install mariadb-columnstore-api-1.1.4-1-x86_64-centos7.rpm
