@@ -221,7 +221,9 @@ EOF
 ```
 
 ```
-mysql -h mariadb02 -u demo -p 'CALL demo.prc_demo_insert_cdc()'
+mysql -h mariadb02 -u demo -p <<EOF
+CALL demo.prc_demo_insert_cdc();'
+EOF
 ```
 Check cdc content:
 ```
