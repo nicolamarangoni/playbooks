@@ -34,12 +34,12 @@
 #        dest: '~'
     - name: Create installer script
       copy:
-        dest: ~/mariadb-columnstore-install.sh
+        dest: '~/mariadb-columnstore-install.sh'
         content: |
           yum -y install ~/mariadb-columnstore-*.rpm
     - name: Install all packages
       command: sh ~/mariadb-columnstore-install.sh
     - name: Remove archive
       file:
-        path: ~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
+        path: '~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz'
         state: absent
