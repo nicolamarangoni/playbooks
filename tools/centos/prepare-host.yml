@@ -21,7 +21,10 @@
           - gcc-c++
           - make
           - wget
-          - python36
+          - python34
+          - python34-pip
+          - python34-mysql
+          - python34-mysql-debug
           - java
           - MySQL-python
           - nodejs
