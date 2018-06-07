@@ -13,10 +13,6 @@
       yum:
         state: latest
         name: maxscale-{{ version }}-1.rhel.7.x86_64.rpm
-    - name: Backup /etc/maxscale.cnf
-      copy:
-        src: /etc/maxscale.cnf
-        dest: /etc/maxscale.cnf.default
     - name: Remove /etc/maxscale.cnf
       file:
         path: /etc/maxscale.cnf
