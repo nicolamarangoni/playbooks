@@ -229,6 +229,15 @@ Check cdc content:
 ```
 cdc.py -u cdcuser -p cdcpasswd -h maxscale00 -P 4001 demo.tbl_demo_cdc
 ```
+## Install ColumnStore
+Install dependencies on all nodes:
+```
+ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-cs-dependencies.yml --extra-vars "host=mariadb-ax"
+```
+Install on the first PM:
+```
+ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-cs.yml --extra-vars "host=mariadb12 version=1.1.4 maxscale_version=2.2.9"
+```
 ## CDC Adapter for the ColumnStore
 To be performed on the User Module of the AX cluster
 
@@ -248,6 +257,7 @@ Start CDC ingestion
 mxs_adapter -u cdcuser -p cdcpasswd -h maxscale00 -P 4001 demo tbl_demo
 ```
 ## Purge replication files
+On the maxscale host:
 ```
 systemctl stop maxscale
 rm -rf /var/lib/maxscale/avro*

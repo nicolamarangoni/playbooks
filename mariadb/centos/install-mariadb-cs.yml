@@ -30,6 +30,22 @@
       shell: tar -xf mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
       args:
         chdir: '{{ work_path }}'
+    - name: Download MaxScale CDC connector rpm
+      get_url:
+        url: https://downloads.mariadb.com/MaxScale/{{ maxscale_version }}/centos/7/x86_64/maxscale-cdc-connector-{{ maxscale_version }}-1.centos.7.x86_64.rpm
+        dest: '{{ work_path }}'
+    - name: Download ColumnStore API
+      get_url:
+        url: https://downloads.mariadb.com/Data-Adapters/mariadb-columnstore-api/{{ version }}/centos/x86_64/7/mariadb-columnstore-api-{{ version }}-1-x86_64-centos7.rpm
+        dest: '{{ work_path }}'
+    - name: Download ColumnStore CDC adapter
+      get_url:
+        url: https://downloads.mariadb.com/Data-Adapters/mariadb-streaming-data-adapters/cdc-data-adapter/{{ version }}/centos-7/mariadb-columnstore-maxscale-cdc-adapters-{{ version }}-1-x86_64-centos7.rpm
+        dest: '{{ work_path }}'
+    - name: Download ColumnStore Kafka adapter
+      get_url:
+        url: https://downloads.mariadb.com/Data-Adapters/mariadb-streaming-data-adapters/kafka-avro-data-adapter/{{ version }}/centos-7/mariadb-columnstore-kafka-avro-adapters-{{ version }}-1-x86_64-centos7.rpm
+        dest: '{{ work_path }}'
     - name: Create installer script
       copy:
         dest: '{{ work_path }}/mariadb-columnstore-install.sh'
