@@ -50,11 +50,11 @@
       copy:
         dest: '{{ work_path }}/mariadb-columnstore-install.sh'
         content: |
-          yum -y install mariadb-columnstore-*.rpm
+          yum -y install mariadb-columnstore-{{ version }}*.rpm
           yum -y install maxscale-cdc-connector-{{ maxscale_version }}-1.centos.7.x86_64.rpm
           yum -y install mariadb-columnstore-api-{{ version }}-1-x86_64-centos7.rpm
           yum -y install mariadb-columnstore-maxscale-cdc-adapters-{{ version }}-1-x86_64-centos7.rpm
-          yum -y install mariadb-columnstore-kafka-avro-adapters-{{ version }}-1-x86_64-centos7.rpm
+  #        yum -y install mariadb-columnstore-kafka-avro-adapters-{{ version }}-1-x86_64-centos7.rpm
     - name: Install all packages
       command: sh {{ work_path }}/mariadb-columnstore-install.sh
     - name: Remove archive
