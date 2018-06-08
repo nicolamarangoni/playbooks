@@ -238,13 +238,17 @@ Install on the first PM:
 ```
 ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-cs.yml --extra-vars "host=mariadb12 version=1.1.4 maxscale_version=2.2.9"
 ```
-### Initial configuration
 Run initial configuration:
 ```
 /usr/local/mariadb/columnstore/bin/postConfigure
 ```
 Leave defaults for the single node installation
-Start CDC ingestion
+## Install ColumnStore Adapters
+Install on one UM:
+```
+ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-cs-adapters.yml --extra-vars "host=mariadb10 version=1.1.4 maxscale_version=2.2.9"
+```
+Start CDC ingestion on on UM of choice
 ```
 mxs_adapter -u cdcuser -p cdcpasswd -h maxscale00 -P 4001 demo tbl_demo
 ```
