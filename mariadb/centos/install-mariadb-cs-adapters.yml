@@ -22,14 +22,6 @@
           - perl
           - perl-DBI
           - perl-DBD-MySQL
-    - name: Download ColumnStore tar
-      get_url:
-        url: https://downloads.mariadb.com/ColumnStore/{{ version }}/centos/x86_64/7/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
-        dest: '{{ work_path }}'
-    - name: Decompress archive
-      shell: tar -xf mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
-      args:
-        chdir: '{{ work_path }}'
     - name: Download MaxScale CDC connector rpm
       get_url:
         url: https://downloads.mariadb.com/MaxScale/{{ maxscale_version }}/centos/7/x86_64/maxscale-cdc-connector-{{ maxscale_version }}-1.centos.7.x86_64.rpm
@@ -48,16 +40,11 @@
 #        dest: '{{ work_path }}'
     - name: Create installer script
       copy:
-        dest: '{{ work_path }}/mariadb-columnstore-install.sh'
+        dest: '{{ work_path }}/mariadb-columnstore-adapters-install.sh'
         content: |
-          yum -y install mariadb-columnstore-{{ version }}*.rpm
           yum -y install maxscale-cdc-connector-{{ maxscale_version }}-1.centos.7.x86_64.rpm
           yum -y install mariadb-columnstore-api-{{ version }}-1-x86_64-centos7.rpm
           yum -y install mariadb-columnstore-maxscale-cdc-adapters-{{ version }}-1-x86_64-centos7.rpm
   #        yum -y install mariadb-columnstore-kafka-avro-adapters-{{ version }}-1-x86_64-centos7.rpm
     - name: Install all packages
-      command: sh {{ work_path }}/mariadb-columnstore-install.sh
-    - name: Remove archive
-      file:
-        path: '{{ work_path }}/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz'
-        state: absent
+      command: sh {{ work_path }}/mariadb-columnstore-adapters-install.sh

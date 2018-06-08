@@ -238,20 +238,12 @@ Install on the first PM:
 ```
 ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-cs.yml --extra-vars "host=mariadb12 version=1.1.4 maxscale_version=2.2.9"
 ```
-## CDC Adapter for the ColumnStore
-To be performed on the User Module of the AX cluster
-
-Download and install:
+### Initial configuration
+Run initial configuration:
 ```
-wget https://downloads.mariadb.com/MaxScale/2.2.9/centos/7/x86_64/maxscale-cdc-connector-2.2.9-1.centos.7.x86_64.rpm
-yum -y install maxscale-cdc-connector-2.2.9-1.centos.7.x86_64.rpm
-
-wget https://downloads.mariadb.com/Data-Adapters/mariadb-columnstore-api/1.1.4/centos/x86_64/7/mariadb-columnstore-api-1.1.4-1-x86_64-centos7.rpm
-yum -y install mariadb-columnstore-api-1.1.4-1-x86_64-centos7.rpm
-
-wget https://downloads.mariadb.com/Data-Adapters/mariadb-streaming-data-adapters/cdc-data-adapter/1.1.4/centos-7/mariadb-columnstore-maxscale-cdc-adapters-1.1.4-1-x86_64-centos7.rpm
-yum -y install mariadb-columnstore-maxscale-cdc-adapters-1.1.4-1-x86_64-centos7.rpm
+/usr/local/mariadb/columnstore/bin/postConfigure
 ```
+Leave defaults for the single node installation
 Start CDC ingestion
 ```
 mxs_adapter -u cdcuser -p cdcpasswd -h maxscale00 -P 4001 demo tbl_demo
