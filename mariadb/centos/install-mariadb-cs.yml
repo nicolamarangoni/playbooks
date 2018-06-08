@@ -1,4 +1,6 @@
 - hosts: '{{ host }}'
+  vars:
+    work_path: /root
   tasks:
     - name: Install dependencies
       yum:
@@ -23,16 +25,19 @@
     - name: Download ColumnStore tar
       get_url:
         url: https://downloads.mariadb.com/ColumnStore/{{ version }}/centos/x86_64/7/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
-        dest: '~'
+        dest: '{{ work_path }}'
     - name: Decompress archive
       shell: tar -xf mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz
       args:
-        chdir: '~'
+        chdir: '{{ work_path }}'
     - name: Create installer script
-      command: 'echo "yum -y install ~/mariadb-columnstore-*.rpm" > ~/mariadb-columnstore-install.sh'
+      copy:
+        dest: '{{ work_path }}/mariadb-columnstore-install.sh'
+        content: |
+          yum -y install mariadb-columnstore-*.rpm
     - name: Install all packages
-      command: sh ~/mariadb-columnstore-install.sh
+      command: sh {{ work_path }}/mariadb-columnstore-install.sh
     - name: Remove archive
       file:
-        path: '~/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz'
+        path: '{{ work_path }}/mariadb-columnstore-{{ version }}-1-centos7.x86_64.rpm.tar.gz'
         state: absent
