@@ -15,18 +15,30 @@
       yum:
         state: latest
         name:
+          - openssl
+          - zlib
+          - file
+          - sudo
           - net-tools
           - nmap-ncat
           - socat
           - gcc-c++
           - make
+          - libaio
+          - rsync
+          - snappy
           - wget
+          - boost
+          - expect
           - python34
           - python34-pip
           - python34-mysql
           - python34-mysql-debug
-          - java
           - MySQL-python
+          - perl
+          - perl-DBI
+          - perl-DBD-MySQL
+          - java
           - nodejs
           - ansible
     - name: stop firewall
