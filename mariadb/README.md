@@ -1,4 +1,4 @@
-# How to use these playbooks
+# Installation and configuration
 ## Install MariaDB client
 Install Client on a group of hosts
 ```
@@ -12,7 +12,7 @@ ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-server.yml --extra-v
 ```
 Create default users on the first host:
 ```
-ansible-playbook ~/playbooks/mariadb/create-mariadb-default-users.yml --extra-vars "host=mariadb00 password=mariadb create_cnf=yes"
+ansible-playbook ~/playbooks/mariadb/setup-mariadb-default-users-cs.yml --extra-vars "host=mariadb-slaves password=mariadb create_cnf=yes"
 ```
 ## Configure a cluster
 Configure galera:
@@ -35,7 +35,7 @@ ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-server.yml --extra-v
 ```
 Create default users on the slave hosts:
 ```
-ansible-playbook ~/playbooks/mariadb/create-mariadb-default-users.yml --extra-vars "host=mariadb-slaves password=mariadb create_cnf=yes"
+ansible-playbook ~/playbooks/mariadb/setup-mariadb-default-users-server.yml --extra-vars "host=mariadb-slaves password=mariadb create_cnf=yes"
 ```
 Galera nodes (masters):
 ```
@@ -55,7 +55,7 @@ Slave:
 ```
 ansible-playbook ~/playbooks/mariadb/configure-replication-slave.yml --extra-vars "host=mariadb03 server_id=3 binlog_name=galera00 domain_id=0"
 ```
-## Start replication
+## Start replication on the slave
 Restart slave (mariadb03)
 ```
 ansible mariadb03 -s -m shell -a 'systemctl restart mariadb'
@@ -92,7 +92,7 @@ CHANGE MASTER TO
 
 START SLAVE;
 ```
-## Configure maxscale
+## Install and configure maxscale
 Install MaxScale:
 ```
 ansible-playbook ~/playbooks/mariadb/centos/install-maxscale.yml --extra-vars "host=maxscale version=2.2.9"
@@ -180,7 +180,59 @@ CHANGE MASTER TO
 
 START SLAVE;
 ```
-## Setup a CDC demo
+## Install ColumnStore
+Install dependencies on all nodes:
+```
+ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-cs-dependencies.yml --extra-vars "host=mariadb-ax"
+```
+Install on the first PM:
+```
+ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-cs.yml --extra-vars "host=mariadb12 version=1.1.4 maxscale_version=2.2.9"
+```
+Run initial configuration:
+```
+/usr/local/mariadb/columnstore/bin/postConfigure
+```
+Leave defaults for the single node installation
+### Install Alias and create setup users
+Install mysql alias for mcsmysql on the UMs:
+```
+ansible-playbook ~/playbooks/mariadb/configure-cs-alias.yml --extra-vars "host=ax-um"
+```
+Setup root with password and demo user:
+```
+ansible-playbook ~/playbooks/mariadb/create-mariadb-default-users.yml --extra-vars "host=mariadb10 password=mariadb create_cnf=yes"
+```
+### Install ColumnStore Adapters
+Install on the UMs:
+```
+ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-cs-adapters.yml --extra-vars "host=ax-um version=1.1.4 maxscale_version=2.2.9"
+```
+### Common commands
+After rebooting, use the following commands to start/restart/stop the ColumnStore:
+```
+mcsadmin startSystem
+mcsadmin restartSystem
+mcsadmin shutdownSystem
+```
+Monitor status:
+```
+mcsadmin getSystemNetworkConfig
+mcsadmin getModuleConfig
+mcsadmin getProcessStatus
+```
+# Demos
+## Install demo databases
+MariaDB Server demo
+```
+ansible-playbook ~/playbooks/mariadb/create-mariadb-demo-dbs-server.yml --extra-vars "host=mariadb00"
+```
+MariaDB Server demo
+```
+ansible-playbook ~/playbooks/mariadb/create-mariadb-demo-dbs-cs.yml --extra-vars "host=mariadb00"
+```
+## CDC Demo
+### Setup a CDC streaming demo in MaxScale
 Create cdc user:
 ```
 maxadmin call command cdc add_user service-avro cdcuser cdcpasswd
@@ -229,49 +281,12 @@ Check cdc content:
 ```
 cdc.py -u cdcuser -p cdcpasswd -h maxscale00 -P 4001 demo.tbl_demo_cdc
 ```
-## Install ColumnStore
-Install dependencies on all nodes:
-```
-ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-cs-dependencies.yml --extra-vars "host=mariadb-ax"
-```
-Install on the first PM:
-```
-ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-cs.yml --extra-vars "host=mariadb12 version=1.1.4 maxscale_version=2.2.9"
-```
-Run initial configuration:
-```
-/usr/local/mariadb/columnstore/bin/postConfigure
-```
-### Install Alias
-Install mysql alias for mcsmysql on the UMs:
-```
-ansible-playbook ~/playbooks/mariadb/configure-cs-alias.yml --extra-vars "host=ax-um"
-```
-Leave defaults for the single node installation
-### Install ColumnStore Adapters
-Install on the UMs:
-```
-ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-cs-adapters.yml --extra-vars "host=ax-um version=1.1.4 maxscale_version=2.2.9"
-```
-### Common commands
-After rebooting, use the following commands to start/restart/stop the ColumnStore:
-```
-mcsadmin startSystem
-mcsadmin restartSystem
-mcsadmin shutdownSystem
-```
-Monitor status:
-```
-mcsadmin getSystemNetworkConfig
-mcsadmin getModuleConfig
-mcsadmin getProcessStatus
-```
-## CDC Demo
+### CDC Demo on ColumnStore
 Start CDC ingestion on one UM of choice
 ```
 mxs_adapter -u cdcuser -p cdcpasswd -h maxscale00 -P 4001 demo tbl_demo
 ```
-## Purge replication files
+### Purge replication files
 On the maxscale host:
 ```
 systemctl stop maxscale

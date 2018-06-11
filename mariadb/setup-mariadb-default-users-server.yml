@@ -1,0 +1,45 @@
+- hosts: '{{ host }}'
+  tasks:
+    - name: set root password
+      mysql_user:
+        name: root
+        password: '{{ password }}'
+    - name: create /root/.my.cnf
+      when:
+        - create_cnf is defined
+        - create_cnf == "yes"
+      copy:
+        dest: '/root/.my.cnf'
+        content: |
+          [client]
+          user=root
+          password={{ password }}
+        mode: '0600'
+    - name: add remote root
+      mysql_user:
+        name: root
+        host: '%'
+        password: '{{ password }}'
+        priv: '*.*:ALL,GRANT'
+    - name: add demo database
+      mysql_db:
+        name: demo
+        collation: utf8mb4_general_ci
+        encoding: utf8mb4
+    - name: add remote demo
+      mysql_user:
+        name: demo
+        host: '%'
+        password: demo
+        priv: 'demo.*:ALL,GRANT'
+    - name: remove anonymous user
+      mysql_user:
+        name: ''
+        host_all: yes
+        state: absent
+    - name: add replication user
+      mysql_user:
+        name: replication
+        host: '%'
+        password: '{{ password }}'
+        priv: '*.*:RELOAD,LOCK TABLES,REPLICATION SLAVE,REPLICATION CLIENT'
