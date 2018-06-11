@@ -149,7 +149,6 @@ ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
 ansible-playbook ~/playbooks/mariadb/configure-maxscale-listener.yml \
   --extra-vars "host=maxscale protocol=CDC service=service-avro listener_name=listener-avro listener_port=4001"
 ```
-## Restart maxscale
 On maxscale hosts:
 ```
 systemctl restart maxscale
@@ -181,11 +180,12 @@ CHANGE MASTER TO
 
 START SLAVE;
 ```
+## Setup a CDC demo
 Create cdc user:
 ```
 maxadmin call command cdc add_user service-avro cdcuser cdcpasswd
 ```
-Create a table in the demo schema to test the avro service:
+Create a table and a procedure that fills it with random text in the demo schema to test the avro service:
 ```
 mysql -h mariadb02 -u demo -p <<EOF
 DROP TABLE IF EXISTS demo.tbl_demo_cdc;
@@ -219,7 +219,7 @@ END;
 //
 EOF
 ```
-
+Execute the procedure to generate random texts in the demo table:
 ```
 mysql -h mariadb02 -u demo -p <<EOF
 CALL demo.prc_demo_insert_cdc();'
@@ -242,13 +242,32 @@ Run initial configuration:
 ```
 /usr/local/mariadb/columnstore/bin/postConfigure
 ```
+### Install Alias
+Install mysql alias for mcsmysql on the UMs:
+```
+ansible-playbook ~/playbooks/mariadb/configure-cs-alias.yml --extra-vars "host=ax-um"
+```
 Leave defaults for the single node installation
-## Install ColumnStore Adapters
-Install on one UM:
+### Install ColumnStore Adapters
+Install on the UMs:
 ```
-ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-cs-adapters.yml --extra-vars "host=mariadb10 version=1.1.4 maxscale_version=2.2.9"
+ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-cs-adapters.yml --extra-vars "host=ax-um version=1.1.4 maxscale_version=2.2.9"
 ```
-Start CDC ingestion on on UM of choice
+### Common commands
+After rebooting, use the following commands to start/restart/stop the ColumnStore:
+```
+mcsadmin startSystem
+mcsadmin restartSystem
+mcsadmin shutdownSystem
+```
+Monitor status:
+```
+mcsadmin getSystemNetworkConfig
+mcsadmin getModuleConfig
+mcsadmin getProcessStatus
+```
+## CDC Demo
+Start CDC ingestion on one UM of choice
 ```
 mxs_adapter -u cdcuser -p cdcpasswd -h maxscale00 -P 4001 demo tbl_demo
 ```
