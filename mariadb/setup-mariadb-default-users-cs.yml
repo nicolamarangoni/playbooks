@@ -18,7 +18,7 @@
       when:
         - create_cnf is defined
         - create_cnf == "yes"
-      ini_file::
+      ini_file:
         dest: '/root/.my.cnf'
         section: client
         option: user
@@ -27,7 +27,7 @@
       when:
         - create_cnf is defined
         - create_cnf == "yes"
-      ini_file::
+      ini_file:
         dest: '/root/.my.cnf'
         section: client
         option: password

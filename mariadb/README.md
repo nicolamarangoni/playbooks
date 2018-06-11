@@ -201,7 +201,7 @@ ansible-playbook ~/playbooks/mariadb/configure-cs-alias.yml --extra-vars "host=a
 ```
 Setup root with password and demo user:
 ```
-ansible-playbook ~/playbooks/mariadb/create-mariadb-default-users.yml --extra-vars "host=mariadb10 password=mariadb create_cnf=yes"
+ansible-playbook ~/playbooks/mariadb/setup-mariadb-default-users-cs.yml --extra-vars "host=mariadb10 password=mariadb create_cnf=yes"
 ```
 ### Install ColumnStore Adapters
 Install on the UMs:
