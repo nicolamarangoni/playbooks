@@ -49,7 +49,7 @@
         host: '%'
         password: demo
         append_privs: yes
-        priv: 'demo.*:ALL,GRANT'
+        priv: 'demo.*:ALL,GRANT/infinidb_vtable.*:ALL'
     - name: remove anonymous user
       mysql_user:
         name: ''
