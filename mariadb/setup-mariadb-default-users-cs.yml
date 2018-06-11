@@ -31,7 +31,7 @@
         dest: '/root/.my.cnf'
         section: client
         option: password
-        password: '{{ password }}'
+        value: '{{ password }}'
     - name: add remote root
       mysql_user:
         name: root
