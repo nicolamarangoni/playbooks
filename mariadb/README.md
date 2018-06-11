@@ -227,9 +227,9 @@ MariaDB Server demo
 ```
 ansible-playbook ~/playbooks/mariadb/create-mariadb-demo-dbs-server.yml --extra-vars "host=mariadb00"
 ```
-MariaDB Server demo
+MariaDB CS demo
 ```
-ansible-playbook ~/playbooks/mariadb/create-mariadb-demo-dbs-cs.yml --extra-vars "host=mariadb00"
+ansible-playbook ~/playbooks/mariadb/create-mariadb-demo-dbs-cs.yml --extra-vars "host=mariadb10"
 ```
 ## CDC Demo
 ### Setup a CDC streaming demo in MaxScale
