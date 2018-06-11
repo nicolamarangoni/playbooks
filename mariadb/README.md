@@ -12,7 +12,7 @@ ansible-playbook ~/playbooks/mariadb/centos/install-mariadb-server.yml --extra-v
 ```
 Create default users on the first host:
 ```
-ansible-playbook ~/playbooks/mariadb/setup-mariadb-default-users-cs.yml --extra-vars "host=mariadb-slaves password=mariadb create_cnf=yes"
+ansible-playbook ~/playbooks/mariadb/setup-mariadb-default-users-server.yml --extra-vars "host=mariadb00 password=mariadb create_cnf=yes"
 ```
 ## Configure a cluster
 Configure galera:

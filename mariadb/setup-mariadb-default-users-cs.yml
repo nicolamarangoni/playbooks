@@ -48,6 +48,7 @@
         name: demo
         host: '%'
         password: demo
+        append_privs: yes
         priv: 'demo.*:ALL,GRANT'
     - name: remove anonymous user
       mysql_user:
