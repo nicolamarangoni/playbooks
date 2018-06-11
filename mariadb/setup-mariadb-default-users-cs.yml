@@ -4,11 +4,17 @@
       when:
         - create_cnf is defined
         - create_cnf == "yes"
+      ini_file:
+        dest: '/root/.my.cnf'
+        section: client
+        option: socket
+        value: /usr/local/mariadb/columnstore/mysql/lib/mysql/mysql.sock
+    - name: Chmod .my.cnf
+      when:
+        - create_cnf is defined
+        - create_cnf == "yes"
       copy:
         dest: '/root/.my.cnf'
-        content: |
-          [client]
-          socket = /usr/local/mariadb/columnstore/mysql/lib/mysql/mysql.sock
         mode: '0600'
     - name: set root password
       mysql_user:
