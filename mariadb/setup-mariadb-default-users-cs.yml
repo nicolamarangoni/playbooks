@@ -13,8 +13,8 @@
       when:
         - create_cnf is defined
         - create_cnf == "yes"
-      copy:
-        dest: '/root/.my.cnf'
+      file:
+        path: '/root/.my.cnf'
         mode: '0600'
     - name: set root password
       mysql_user:
